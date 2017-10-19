@@ -1,5 +1,5 @@
 #include <list>
-#include <iostream>
+#include <cassert>
 using namespace std;
 
 template <class T>
@@ -20,14 +20,14 @@ void myStack::push (<T> data) {
 // Throws exception if isEmpty()
 template <class T>
 int myStack::peak() {
-  assert(isEmpty()); // Esto podríamos dejarlo más bonito
+  assert(!isEmpty()); // Esto podríamos dejarlo más bonito
   return *l.front(); // Devolvemos el elemento apuntado por el iterador
 }
 
 // Throws exception if isEmpty()
 template <class T>
 int myStack::pop() {
-  assert(isEmpty()); // Esto podríamos dejarlo más bonito
+  assert(!isEmpty()); // Esto podríamos dejarlo más bonito
   T aux = *l.front();
   l.erase(l.begin());
   return aux;
