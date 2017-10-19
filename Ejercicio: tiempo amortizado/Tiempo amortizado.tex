@@ -1,0 +1,126 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla, es-lcroman]{babel}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{adjustbox}
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage[shortlabels]{enumitem}
+\usepackage{xcolor}
+\usepackage{soul}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Meta
+\title{Ejercicio de evaluación contínua: tiempo amortizado}
+\author{José Antonio Álvarez Ocete}
+\date{\today}
+
+% Custom
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\setlength\parindent{0pt}
+\definecolor{Light}{gray}{.90}
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+% Listings
+\lstset{literate=   % listings config
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\EUR}}1 {£}{{\pounds}}1 {ñ}{{\~{n}}}1
+}
+
+\lstset{    %listings config
+  language=C++,
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=0.1in,
+  %otherkeywords={},
+  showstringspaces=false,
+  backgroundcolor=\color{white},
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{purple!90!black},
+  commentstyle=\itshape\color{gray!85!},
+  identifierstyle=\color{blue!80!black},
+  stringstyle=\color{green!60!black},
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Enunciado}
+
+La pregunta planteada viene de la mano de la eficiencia del método \emph{quitar()} en la implementación de la pila vista en clase:
+
+\begin{lstlisting}
+void Pila::quitar() 
+{
+  assert (nelem > 0);
+  nelem--;
+  if (nelem<reservados/4) resize(reservados/2);	
+}
+\end{lstlisting}
+
+Sabemos que el método \emph{resize(n)} tiene orden de eficiencia \emph{O(n)}. Sin embargo, \emph{quitar()} es de orden \emph{O(1)}. ¿Por qué? Además, sustituyendo el 4 por un 2 pasamos a tener \emph{O(n)}. ¿Por qué?
+
+\section{Solución}
+
+Respondamos primero a la primera pregunta. Intuitivamente es sencillo: la llamada al método ocurre muy pocas veces. Veámoslo con un caso análogo pero más sencillo de entender, la inserción en el vector dinámico la cual es exactamente la misma que la del método \emph{poner()} en la Pila. La implementación es la siguiente:
+
+\begin{lstlisting}
+// Asumimos que el vector ha sido creado con capacidad = 1
+void vector_dinamico::insert(int value) 
+{
+  if (nelem==capacidad) resize(capacidad*2); //Duplicamos la capacidad si está lleno
+  vector[nelem] = value;
+  nelem++;
+}
+\end{lstlisting}
+
+¿Cuál sería la eficiencia al insertar n elementos? Asumamos que n es potencia de 2 para hacer los cálculos más sencillos. Llamaríamos al \emph{resize()} cada vez que el número de elementos alcanza una potencia de 2, y  duplicaría la capacidad. Es decir copiaremos en total los siguientes elemenos:
+$$ 1 + 2 + 4 + 8 + ... + n/2 + n$$
+Esta suma tiende a \emph{2n}. Por lo tanto nos tomaría aproximadamente \emph{2n} unidades de tiempo insertar n elementos en el vector, obteniendo una eficiencia de \emph{O(1)} al insertar un elemento. \\
+
+Lo mismo ocurre en el caso de la pila. Si queremos retirar todos elementos de la pila (n), llamaríamos a \emph{resize()} para los elementos:
+$$ n/4 + n/16 + n/64 + ... + 1  = \sum_{i=1}^{p}{\frac{n}{4^i}},j\geq1 cumpliendo: 4^j = n$$ 
+
+Estudiando esta progresión geométrica obtenemos (la razón es menor que 1):
+
+$$ \sum_{i=1}^{p}{\frac{n}{4^i}} = n * \sum_{i=1}^{p}{(\frac{1}{4})^i} = n * \frac{1/4}{1-1/4} = \frac{n}{3}$$
+
+Haciendo un cálculo análogo al del ejemplo anterior, quitamos n elementos de la pila en un tiempo \emph{O(n/3)} obteniendo una eficiencia de \emph{O(1)} al quitar un solo elemento. \\
+
+Nota: Hemos asumido que el \emph{resize()} implementado en la clase \emph{Pila} copia unicamente los elementos del vector que estamos usando. Es decir, hasta \emph{nelems}.
+
+¿Qué ocurre si modificamos el método de la siguiente forma?
+
+\begin{lstlisting}
+void Pila::quitar() 
+{
+  assert (nelem > 0);
+  nelem--;
+  if (nelem<reservados/2) resize(reservados/2);	
+}
+\end{lstlisting}
+
+Si aplicamos el mismo razonamiento pensaremos que la eficiencia sigue siendo de orden \emph{O(1)}. Sin embargo, este no es el peor caso posible. El problema de esta implementación es que si justo después de reducir la pila a la mitad queremos introducir un nuevo elemento tenemos que volver a hacer \emph{resize()} para ampliar la capacidad del vector. ¿Y si volvemos a quitar un elemento? ¿Y si, justo después, volvemos a introducir otro elemento? Este es, de hecho, el peor caso posible.\\
+
+Repitiendo este proceso de forma indefinida (introducir y quitar elementos con la pila al límite de su capacidad) haríamos \emph{resize()} en cada llamada a \emph{quitar()} y cada vez que introducimos un elemento. Esto provocaría que la eficiencia fuese \emph{O(n)} tanto para \emph{quitar()} como para \emph{poner()}. \\
+
+Esto no ocurre en el caso anterior. Esto se debe a que dejamos un trozo de pila vacía cada vez que la reducimos (un cuarto para ser exactos). De esta forma podemos hacer tantos \emph{poner()} entre dos \emph{quitar()} como queramos: no provocaremos que la pila se reduzca con un solo \emph{quitar()}.
+
+\end{document}

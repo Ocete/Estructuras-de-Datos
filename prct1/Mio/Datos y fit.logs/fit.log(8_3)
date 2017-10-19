@@ -1,0 +1,39 @@
+
+
+*******************************************************************************
+Tue Sep 26 10:06:55 2017
+
+
+FIT:    data read from "tiempos_mergesortUmbralAlto.dat"
+        format = z
+        x range restricted to [-150000. : 150000.]
+        #datapoints = 150
+        residuals are weighted equally (unit weight)
+
+function used for fitting: h(x)
+	h(x) = h*x*log(x) + i*x + j
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   h             i             j            
+   0 1.8018882814e+14   0.00e+00  5.85e+05    1.000000e+00   1.000000e+00   1.000000e+00
+   9 3.9030262798e-02  -2.91e-03  5.85e-04   -2.372111e-07   3.783363e-06  -9.651305e-03
+
+After 9 iterations the fit converged.
+final sum of squares of residuals : 0.0390303
+rel. change during last iteration : -2.91034e-08
+
+degrees of freedom    (FIT_NDF)                        : 147
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0162945
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.000265512
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+h               = -2.37211e-07     +/- 9.354e-08    (39.43%)
+i               = 3.78336e-06      +/- 1.132e-06    (29.91%)
+j               = -0.0096513       +/- 0.005455     (56.52%)
+
+correlation matrix of the fit parameters:
+                h      i      j      
+h               1.000 
+i              -1.000  1.000 
+j               0.872 -0.883  1.000 

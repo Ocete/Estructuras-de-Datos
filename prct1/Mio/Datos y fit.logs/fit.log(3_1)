@@ -1,0 +1,68 @@
+
+
+*******************************************************************************
+Mon Sep 25 19:52:17 2017
+
+
+FIT:    data read from "tiempos_busquedad_binaria.dat"
+        format = z
+        #datapoints = 60
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = a*log_2(b*x) +c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Mon Sep 25 19:52:38 2017
+
+
+FIT:    data read from "tiempos_busquedad_binaria.dat"
+        format = z
+        #datapoints = 60
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = a*log2(b*x) +c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Mon Sep 25 19:54:56 2017
+
+
+FIT:    data read from "tiempos_busquedad_binaria.dat"
+        format = z
+        #datapoints = 60
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = a * log10(b*x) / log10(2) + c
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b             c            
+   0 2.6674142716e+04   0.00e+00  1.16e+01    1.000000e+00   1.000000e+00   1.000000e+00
+   6 2.1867913015e-14  -3.60e-03  1.16e-05    1.089698e-09   9.755496e-01   1.086909e-07
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 2.18679e-14
+rel. change during last iteration : -3.59904e-08
+
+degrees of freedom    (FIT_NDF)                        : 57
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 1.95869e-08
+variance of residuals (reduced chisquare) = WSSR/ndf   : 3.83648e-16
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a               = 1.0897e-09       +/- 1.668e-09    (153%)
+b               = 0.97555          +/- 2.123e+11    (2.177e+13%)
+c               = 1.08691e-07      +/- 342          (3.147e+11%)
+
+correlation matrix of the fit parameters:
+                a      b      c      
+a               1.000 
+b               0.091  1.000 
+c              -0.091 -1.000  1.000 
