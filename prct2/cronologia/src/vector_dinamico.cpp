@@ -53,13 +53,6 @@ void vector_dinamico<T>::addOrdenado (T t) {
   elems++;
 }
 
-/*
-template <class T>
-T vector_dinamico<T>::get (int i) {
-  return v[i];
-}
-*/
-
 template <class T>
 T& vector_dinamico<T>::operator[] (int i) {
   assert (0<=i && i<elems);

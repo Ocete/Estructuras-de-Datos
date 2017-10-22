@@ -95,8 +95,8 @@ Cronologia Cronologia::subcronologia(int anioDesde, int anioHasta) const {
   Cronologia cron;
   FechaHistorica *aux = NULL;
   int i=0;
-  while (i<getNumFechasHistoricas() && v[i]->getFecha() < anioHasta) {
-    if (v[i]->getFecha() > anioDesde) {
+  while (i<getNumFechasHistoricas() && v[i]->getFecha() <= anioHasta) {
+    if (v[i]->getFecha() >= anioDesde) {
       aux = v[i];
       cron.v.add(aux);
     }
@@ -150,7 +150,7 @@ Cronologia Cronologia::mergeCron(const Cronologia &cron) const {
     result.v.add(fh);
     j++;
   }
-  
+
   return result;
 }
 
