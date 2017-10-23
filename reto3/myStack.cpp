@@ -1,6 +1,4 @@
-#include <list>
 #include <cassert>
-#include "myStack.h"
 using namespace std;
 
 template <class T>

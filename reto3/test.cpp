@@ -1,5 +1,5 @@
 #include <iostream>
-#include "myStack.h"
+#include "StackMax.h"
 
 using namespace std;
 

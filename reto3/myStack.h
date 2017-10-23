@@ -1,7 +1,7 @@
-#include <list>
-
 #ifndef _MY_STACK_H_
 #define _MY_STACK_H_
+
+#include <list>
 
 template <class T>
 class myStack{
