@@ -1,5 +1,5 @@
 #include <cassert>
-using namespace std;
+#include <exception>
 
 template <class T>
 myStack<T>::myStack() { }
@@ -14,21 +14,25 @@ myStack<T>::~myStack() {
 
 template <class T>
 void myStack<T>::push (T data) {
-  pushFront(data);
+  l.push_front(data);
 }
 
 // Throws exception if isEmpty()
 template <class T>
 T myStack<T>::peak() {
-  assert(!isEmpty()); // Esto podríamos dejarlo más bonito
-  return *l.front(); // Devolvemos el elemento apuntado por el iterador
+  if(isEmpty())
+    throw  std::out_of_range("Empty stack");
+
+  return l.front(); // Devolvemos el elemento apuntado por el iterador
 }
 
 // Throws exception if isEmpty()
 template <class T>
 T myStack<T>::pop() {
-  assert(!isEmpty()); // Esto podríamos dejarlo más bonito
-  T aux = *l.front();
+  if(isEmpty())
+    throw  std::out_of_range("Empty stack");
+
+  T aux = l.front();
   l.erase(l.begin());
   return aux;
 }
