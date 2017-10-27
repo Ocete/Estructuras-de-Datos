@@ -1,5 +1,6 @@
 #include <cassert>
 #include <exception>
+#include <stdexcept> 
 
 template <class T>
 myStack<T>::myStack() { }
