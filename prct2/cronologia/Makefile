@@ -15,6 +15,10 @@ PRJ = practica2
 # que se sustituyen por su valor definido anteriormente
 all: $(BIN)/pruebacronologia
 
+ejecucion: $(BIN)/pruebacronologia
+	bin/pruebacronologia datos/timeline_algorithms.txt datos/timeline_movies.txt
+
+
 # ************ Generación de documentación ******************
 documentacion:
 	doxygen doc/doxys/Doxyfile

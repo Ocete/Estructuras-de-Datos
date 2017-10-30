@@ -76,4 +76,4 @@ public:
 };
 
 #include "../src/vector_dinamico.cpp"
-#endif
+#endif /* vector_dinamico.h */
