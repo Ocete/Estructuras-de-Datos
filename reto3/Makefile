@@ -1,10 +1,10 @@
 CXX = g++
 CPPFLAGS = -Wall -g
 
-all: ejemplo testStack
+all: ejemplo
 
 ejemplo :
 	$(CXX) $(CPPFLAGS) ejemplo_uso.cpp -o ejemplo
 
-testStack :
-	$(CXX) $(CPPFLAGS) test.cpp -o devTest
+#testStack :
+#	$(CXX) $(CPPFLAGS) test.cpp -o devTest

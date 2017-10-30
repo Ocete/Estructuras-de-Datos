@@ -2,12 +2,12 @@
 using namespace std;
 
 template <class T>
-StackMax<T>::StackMax () {
+StackCeldas<T>::StackCeldas () {
   top = NULL;
 }
 
 template <class T>
-StackMax<T>::~StackMax() {
+StackCeldas<T>::~StackCeldas() {
   Node * aux;
   while (top != NULL) {
     aux = top;
@@ -18,20 +18,18 @@ StackMax<T>::~StackMax() {
 
 // Throws exception if isEmpty()
 template <class T>
-T StackMax<T>::peak () {
+T StackCeldas<T>::peak () {
   assert (!isEmpty());
   return top->data;
 }
 
 template <class T>
-void StackMax<T>::push (T data) {
+void StackCeldas<T>::push (T data) {
   Node * newTop = new Node;
   newTop->data = data;
   if (top == NULL) {
-    newTop->max = data;
     newTop->next = NULL;
   } else {
-    newTop->max = data > top->max ? data : top->max;
     newTop->next = top;
   }
   top = newTop;
@@ -39,7 +37,7 @@ void StackMax<T>::push (T data) {
 
 // Throws exception if isEmpty()
 template <class T>
-T StackMax<T>::pop () {
+T StackCeldas<T>::pop () {
   assert (!isEmpty());
   T result = top->data;
   Node * aux = top->next;
@@ -48,14 +46,22 @@ T StackMax<T>::pop () {
   return result;
 }
 
-// Returns 0 if isEmpty
+
 template <class T>
-T StackMax<T>::max () {
-  assert (!isEmpty());
-  return top->max;
+bool StackCeldas<T>::isEmpty () {
+  return top == NULL;
 }
 
 template <class T>
-bool StackMax<T>::isEmpty () {
-  return top == NULL;
+int StackCeldas<T>::size () {
+  int counter = 1;
+
+  Node * aux = top-> next;
+
+  while(aux != 0){
+    aux = aux->next;
+    counter++;
+  }
+
+  return counter;
 }

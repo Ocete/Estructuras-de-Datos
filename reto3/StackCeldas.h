@@ -1,25 +1,24 @@
-#ifndef _STACK_MAX_H_
-#define _STACK_MAX_H_
+#ifndef _STACK_CELDAS_H_
+#define _STACK_CELDAS_H_
 
 template <class T>
-class StackMax {
+class StackCeldas {
   struct Node {
     Node * next;
     T data;
-    T max;
   };
 private:
   Node * top;
 
 public:
-  StackMax();
-  ~StackMax();
+  StackCeldas();
+  ~StackCeldas();
   void push(T data);
   T pop();
   T peak();
-  T max();
   bool isEmpty();
+  int size();
 };
 
-#include "StackMax.cpp"
+#include "StackCeldas.cpp"
 #endif
