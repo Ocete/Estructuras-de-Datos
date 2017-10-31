@@ -15,7 +15,7 @@
 /**
  * @brief Cronologia
  *
- * Conjunto ordenado de fechas históricas al que podemos aplciar diversas
+ * Conjunto ordenado de fechas históricas al que podemos aplicar diversas
  * operaciones como obtener una fecha histórica específica, la unión de dos
  * cronologías, la intersección o la subcronología entre dos años dados.
  *
