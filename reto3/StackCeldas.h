@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 #ifndef _STACK_CELDAS_H_
 #define _STACK_CELDAS_H_
 

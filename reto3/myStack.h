@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 #ifndef _MY_STACK_H_
 #define _MY_STACK_H_
 

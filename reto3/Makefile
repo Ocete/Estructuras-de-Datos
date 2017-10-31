@@ -1,3 +1,5 @@
+# José Antonio Álvarez Ocete
+# Yábir García Benchakhtir
 CXX = g++
 CPPFLAGS = -Wall -g
 

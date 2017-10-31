@@ -1,6 +1,8 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 #include <cassert>
 #include <exception>
-#include <stdexcept> 
+#include <stdexcept>
 
 template <class T>
 myStack<T>::myStack() { }

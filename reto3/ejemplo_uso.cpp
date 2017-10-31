@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 #include "myStack.h"
 #include "StackCeldas.h"
 #include <iostream>
