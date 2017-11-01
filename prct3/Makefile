@@ -13,7 +13,7 @@ PRJ = practica2
 
 # Las macros se usan en las reglas del makefile como si fuesen variables
 # que se sustituyen por su valor definido anteriormente
-all: $(BIN)/pruebacronologia
+all: $(BIN)/test
 
 # ************ Generación de documentación ******************
 documentacion:
@@ -22,6 +22,10 @@ documentacion:
 
 # ************ Compilación de módulos ************
 # Creamos los objetos
+$(BIN)/test :
+	g++ $(OPT) $(SRC)/test.cpp -o $(BIN)/test
+
+
 $(OBJ)/fecha_historica.o : $(SRC)/fecha_historica.cpp $(INC)/fecha_historica.h $(INC)/vector_dinamico.h
 	g++ $(OPT) -I./$(INC) -c  $(SRC)/fecha_historica.cpp -o $(OBJ)/fecha_historica.o
 

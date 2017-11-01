@@ -3,22 +3,24 @@
 #define _STACK_MAX_VD_H_
 
 template <class T>
-class stackMaxVD {
+class StackMaxVD {
   struct pair {
     T max;
     T data;
   };
 private:
   vector<pair> v;
+
 public:
-  stackMaxVD();
-  ~stackMaxVD();
-  void add(T data);
+  StackMaxVD();
+  ~StackMaxVD();
+  void push(T data);
   T peak();
-  void remove();
+  T pop();
   T max();
+  int size();
   bool isEmpty();
 };
 
-#include "../src/stackMaxVD.cpp"
+#include "../src/StackMaxVD.cpp"
 #endif

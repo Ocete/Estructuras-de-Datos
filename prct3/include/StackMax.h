@@ -10,6 +10,7 @@ class StackMax {
   };
 private:
   Node * top;
+  int elems = 0;
 
 public:
   StackMax();
@@ -18,8 +19,9 @@ public:
   T pop();
   T peak();
   T max();
+  int size();
   bool isEmpty();
 };
 
-#include "StackMax.cpp"
+#include "../src/StackMax.cpp"
 #endif

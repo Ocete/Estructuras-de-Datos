@@ -35,6 +35,7 @@ void StackMax<T>::push (T data) {
     newTop->next = top;
   }
   top = newTop;
+  elems++;
 }
 
 // Throws exception if isEmpty()
@@ -45,6 +46,7 @@ T StackMax<T>::pop () {
   Node * aux = top->next;
   delete top;
   top = aux;
+  elems--;
   return result;
 }
 
@@ -53,6 +55,11 @@ template <class T>
 T StackMax<T>::max () {
   assert (!isEmpty());
   return top->max;
+}
+
+template <class T>
+int StackMax<T>::size() {
+  return elems;
 }
 
 template <class T>
