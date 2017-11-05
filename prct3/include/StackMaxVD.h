@@ -1,16 +1,19 @@
+//https://isocpp.org/wiki/faq/templates#nondependent-name-lookup-members
 
 #ifndef _STACK_MAX_VD_H_
 #define _STACK_MAX_VD_H_
 
+#include <vector>
+template <class T>
+struct Ownpair {
+  T max;
+  T data;
+};
+
 template <class T>
 class StackMaxVD {
-  struct pair {
-    T max;
-    T data;
-  };
 private:
-  vector<pair> v;
-
+  std::vector<Ownpair<T> > v;
 public:
   StackMaxVD();
   ~StackMaxVD();
