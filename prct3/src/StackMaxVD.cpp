@@ -1,43 +1,55 @@
-#include <cassert> // Para la funcion assert
-using namespace std;
+//Manage exceptions
+#include <exception>
+#include <stdexcept>
+
+#include "StackMaxVD.h"
+
 
 template <class T>
-StackMaxVD::StackMaxVD() { }
+StackMaxVD<T>::StackMaxVD() { }
 
 template <class T>
-StackMaxVD::~StackMaxVD() { }
+StackMaxVD<T>::~StackMaxVD() { }
 
 template <class T>
-void StackMaxVD::push(T data) {
-  pair pareja;
+void StackMaxVD<T>::push(T data) {
+  Ownpair<T> pareja;
   pareja.data = data;
-  pareja.max = data > max() ? data : max();
-  v.add(pareja);
-  elems++;
+  try{
+    pareja.max = data > max() ? data : max();
+  }catch(std::out_of_range & e){
+    pareja.max = data;
+  }
+
+  v.push_back(pareja);
 }
 
 template <class T>
-T StackMaxVD::peak() {
-  return v[v.getElems()].data;
+T StackMaxVD<T>::peak() {
+  return v[v.size()].data;
 }
 
 template <class T>
-T StackMaxVD::pop() {
-  return v.removeLast().data;
+T StackMaxVD<T>::pop() {
+  return v.pop_back().data;
 }
 
 template <class T>
-T StackMaxVD::max() {
-  return v[v.getElems()].max;
+T StackMaxVD<T>::max() {
+  int si = v.size();
+  if (si == 0)
+    throw std::out_of_range("Empty vector");
+
+  return v[si].max;
 }
 
 template <class T>
-int StackMaxVD::size() {
+int StackMaxVD<T>::size() {
   return v.getElems();
 }
 
 
 template <class T>
-bool StackMaxVD::isEmpty() {
-  return v.getElems == 0;
+bool StackMaxVD<T>::isEmpty() {
+  return v.size() == 0;
 }
