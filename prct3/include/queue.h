@@ -45,7 +45,7 @@ public:
   */
   T peak();
 /**
-  * @brief Saca un elemento de la cola (el último introducido).
+  * @brief Saca un elemento de la cola (el primero introducido).
   * @return Elemento extraído.
   */
   T remove();
