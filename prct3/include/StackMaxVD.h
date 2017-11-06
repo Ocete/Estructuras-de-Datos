@@ -3,7 +3,7 @@
 #ifndef _STACK_MAX_VD_H_
 #define _STACK_MAX_VD_H_
 
-#include <vector>
+#include "dinamicArray.h"
 template <class T>
 struct Ownpair {
   T max;
@@ -13,7 +13,7 @@ struct Ownpair {
 template <class T>
 class StackMaxVD {
 private:
-  std::vector<Ownpair<T> > v;
+  DinamicArray<Ownpair<T> > v;
 public:
   StackMaxVD();
   ~StackMaxVD();
