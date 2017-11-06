@@ -10,36 +10,33 @@ template <class T>
 StackMaxVD<T>::StackMaxVD() { }
 
 template <class T>
-StackMaxVD<T>::~StackMaxVD() { }
+StackMaxVD<T>::~StackMaxVD() {}
 
 template <class T>
 void StackMaxVD<T>::push(T data) {
   Ownpair<T> pareja;
   pareja.data = data;
-  try{
-    pareja.max = data > max() ? data : max();
-  }catch(std::out_of_range & e){
+  if(isEmpty())
     pareja.max = data;
-  }
+  else
+    pareja.max = data > max() ? data : max();
 
-  v.push_back(pareja);
+  v.push(pareja);
 }
 
 template <class T>
 T StackMaxVD<T>::peak() {
-  return v[v.size()].data;
+  return v[v.used()].data;
 }
 
 template <class T>
 T StackMaxVD<T>::pop() {
-  T d = v.back().data;
-  v.pop_back();
-  return d;
+  return v.pop_back().data;
 }
 
 template <class T>
 T StackMaxVD<T>::max() {
-  int si = v.size();
+  int si = v.used();
   if (si == 0)
     throw out_of_range("Empty vector");
 
@@ -48,11 +45,11 @@ T StackMaxVD<T>::max() {
 
 template <class T>
 int StackMaxVD<T>::size() {
-  return v.size();
+  return v.used();
 }
 
 
 template <class T>
 bool StackMaxVD<T>::isEmpty() {
-  return v.size() == 0;
+  return v.used() == 0;
 }
