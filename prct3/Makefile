@@ -6,14 +6,14 @@ INC = ./include
 CXX = g++
 ZIP = ./zip
 # Opciones de compilación
-OPT = -Wall -g  -I$(INC) -O2 -std=c++11
+CPPFLAGS = -std=c++11 -Wall -g
 # Nombre de la práctica
 PRJ = practica2
 
 
 # Las macros se usan en las reglas del makefile como si fuesen variables
 # que se sustituyen por su valor definido anteriormente
-all: $(BIN)/test
+all: $(BIN)/testVDinamico
 
 # ************ Generación de documentación ******************
 documentacion:
@@ -22,22 +22,13 @@ documentacion:
 
 # ************ Compilación de módulos ************
 # Creamos los objetos
-$(BIN)/test :
-	g++ $(OPT) $(SRC)/test.cpp -o $(BIN)/test
 
 
-$(OBJ)/fecha_historica.o : $(SRC)/fecha_historica.cpp $(INC)/fecha_historica.h $(INC)/vector_dinamico.h
-	g++ $(OPT) -I./$(INC) -c  $(SRC)/fecha_historica.cpp -o $(OBJ)/fecha_historica.o
+$(OBJ)/testVDinamico.o : $(SRC)/testVDinamico.cpp $(INC)/StackMaxVD.h $(INC)/vector_dinamico.h
+	$(CXX) $(CPPFLAGS) -I$(INC) -o $(OBJ)/testVDinamico.o $(SRC)/testVDinamico.cpp
 
-$(OBJ)/cronologia.o : $(SRC)/cronologia.cpp $(INC)/cronologia.h $(INC)/fecha_historica.h $(INC)/vector_dinamico.h
-	g++ $(OPT) -I./$(INC) -c $(SRC)/cronologia.cpp -o $(OBJ)/cronologia.o
-
-# Creamos pruebacronologia
-$(OBJ)/pruebacronologia.o : $(SRC)/pruebacronologia.cpp $(INC)/cronologia.h $(INC)/fecha_historica.h
-	g++ $(OPT) -I./$(INC) -c $(SRC)/pruebacronologia.cpp -o $(OBJ)/pruebacronologia.o
-
-$(BIN)/pruebacronologia : $(OBJ)/pruebacronologia.o $(OBJ)/cronologia.o $(OBJ)/fecha_historica.o
-	g++ $(OBJ)/pruebacronologia.o -o $(BIN)/pruebacronologia $(OBJ)/cronologia.o $(OBJ)/fecha_historica.o
+$(BIN)/testVDinamico :$(OBJ)/testVDinamico.o
+	$(CXX) $(CPPFLAGS) $(OBJ)/testVDinamico.o -o $(BIN)/testVDinamico
 
 # ************ Limpieza y encapsulado ************
 clean :
