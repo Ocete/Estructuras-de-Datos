@@ -1,9 +1,10 @@
 //Manage exceptions
 #include <exception>
 #include <stdexcept>
-
+#include <iostream>
 #include "StackMaxVD.h"
 
+using namespace std;
 
 template <class T>
 StackMaxVD<T>::StackMaxVD() { }
@@ -31,21 +32,23 @@ T StackMaxVD<T>::peak() {
 
 template <class T>
 T StackMaxVD<T>::pop() {
-  return v.pop_back().data;
+  T d = v.back().data;
+  v.pop_back();
+  return d;
 }
 
 template <class T>
 T StackMaxVD<T>::max() {
   int si = v.size();
   if (si == 0)
-    throw std::out_of_range("Empty vector");
+    throw out_of_range("Empty vector");
 
   return v[si].max;
 }
 
 template <class T>
 int StackMaxVD<T>::size() {
-  return v.getElems();
+  return v.size();
 }
 
 

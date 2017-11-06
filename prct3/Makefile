@@ -6,7 +6,7 @@ INC = ./include
 CXX = g++
 ZIP = ./zip
 # Opciones de compilación
-CPPFLAGS = -std=c++11 -Wall -g
+CPPFLAGS = -std=c++14 -Wall -g
 # Nombre de la práctica
 PRJ = practica2
 
@@ -23,12 +23,9 @@ documentacion:
 # ************ Compilación de módulos ************
 # Creamos los objetos
 
+$(BIN)/testVDinamico : $(SRC)/testVDinamico.cpp $(INC)/StackMaxVD.h  $(SRC)/StackMaxVD.cpp
+	$(CXX) $(CPPFLAGS) -I$(INC) $(SRC)/testVDinamico.cpp -o $(BIN)/testVDinamico
 
-$(OBJ)/testVDinamico.o : $(SRC)/testVDinamico.cpp $(INC)/StackMaxVD.h $(INC)/vector_dinamico.h
-	$(CXX) $(CPPFLAGS) -I$(INC) -o $(OBJ)/testVDinamico.o $(SRC)/testVDinamico.cpp
-
-$(BIN)/testVDinamico :$(OBJ)/testVDinamico.o
-	$(CXX) $(CPPFLAGS) $(OBJ)/testVDinamico.o -o $(BIN)/testVDinamico
 
 # ************ Limpieza y encapsulado ************
 clean :

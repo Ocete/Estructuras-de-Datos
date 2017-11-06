@@ -1,5 +1,7 @@
 #include <iostream>
+
 #include "StackMaxVD.h"
+
 using namespace std;
 
 int main() {
@@ -19,4 +21,25 @@ int main() {
   }
 
   cout << endl;
+
+  cout << "El tamaño de la pila es: " << prueba.size() << endl;
+  cout << "El elemento en el tope es: " << prueba.peak() << endl;
+
+  cout << "-------------" << endl;
+  cout << "Quitar elementos de la pila: " << endl;
+
+  int size = prueba.size();
+  for(int i = 0; i < size; i++){
+    cout << "Nuevo tope: " << prueba.peak() << ".";
+    cout << "Tamaño actual: " << prueba.size() << endl;
+    cout << "Eliminando tope: " << prueba.pop() << ".";
+  }
+
+  if(prueba.isEmpty())
+    mensaje = "Sí está vacio.";
+  else
+    mensaje = "No está vacio.";
+
+  cout << endl << "¿Está vacio? " << mensaje << endl;
+
 }
