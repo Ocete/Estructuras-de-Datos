@@ -6,11 +6,12 @@
 
 using namespace std;
 
-template <class T>
+/*template <class T>
 StackMaxVD<T>::StackMaxVD() { }
 
 template <class T>
 StackMaxVD<T>::~StackMaxVD() {}
+*/
 
 template <class T>
 void StackMaxVD<T>::push(T data) {

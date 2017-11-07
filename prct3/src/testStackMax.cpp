@@ -27,7 +27,7 @@ int main() {
 
   int size = prueba.size();
   for(int i = 0; i < size; i++){
-    cout << "Nuevo tope: " << prueba.peak() << ".";
+    cout << "Tope: (" << prueba.peak() << ", " << prueba.max() << "). ";
     cout << "Tamaño actual: " << prueba.size() << endl;
     cout << "Eliminando tope: " << prueba.pop() << ".";
   }
