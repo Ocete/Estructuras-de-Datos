@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 #include <cassert> // Para la funcion assert
 using namespace std;
 

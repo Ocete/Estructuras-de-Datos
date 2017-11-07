@@ -1,3 +1,5 @@
+# José Antonio Álvarez Ocete
+# Yábir García Benchakhtir
 # Definición de macros para definir las carpetas de trabajo
 BIN = ./bin
 OBJ = ./obj
@@ -8,7 +10,7 @@ ZIP = ./zip
 # Opciones de compilación
 CPPFLAGS = -std=c++14 -Wall -g
 # Nombre de la práctica
-PRJ = practica2
+PRJ = practica3
 
 
 # Las macros se usan en las reglas del makefile como si fuesen variables
@@ -21,7 +23,7 @@ documentacion:
 
 
 # ************ Compilación de módulos ************
-# Creamos los objetos
+# Creamos los tests
 
 $(BIN)/testVDinamico : $(SRC)/testVDinamico.cpp $(INC)/StackMaxVD.h  $(SRC)/StackMaxVD.cpp
 	$(CXX) $(CPPFLAGS) -I$(INC) $(SRC)/testVDinamico.cpp -o $(BIN)/testVDinamico

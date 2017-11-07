@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 /**
   * @file dinamicArray.h
   * @brief Fichero cabecera del TDA Vector Dinamico

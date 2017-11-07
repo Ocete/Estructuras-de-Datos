@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 /**
  * @file StackMaxVD.h
  * @brief Fichero cabecera de la Pila implementada con usando un vector dinamico.

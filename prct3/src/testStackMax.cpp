@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 #include <iostream>
 #include "StackMax.h"
 using namespace std;

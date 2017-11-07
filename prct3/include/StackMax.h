@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 /**
  * @file StackMax.h
  * @brief Fichero cabecera de la Pila implementada con celdas.

@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 /**
  * @file StackMaxQueue.h
  * @brief Fichero cabecera de la Pila implementada con usando una cola.

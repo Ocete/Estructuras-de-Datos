@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 //Manage exceptions
 #include <exception>
 #include <stdexcept>

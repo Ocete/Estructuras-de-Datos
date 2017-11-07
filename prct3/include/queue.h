@@ -1,3 +1,5 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
 /**
  * @file queue.h
  * @brief Fichero cabecera de la Cola.
