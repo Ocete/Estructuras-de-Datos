@@ -94,6 +94,19 @@ class DinamicArray{
   int used() const;
 
   /**
+   * @brief Referencia al último elemento insertado en la lista
+   * @return out @c T como referencia al ultimo elemento.
+   */
+  T& back() const;
+
+  /**
+   * @brief Referencia al último elemento insertado en la lista
+   * @return out @c T como referencia al ultimo elemento.
+   */
+
+  T& back();
+
+  /**
    * @brief Referencia al número de elementos que se encuentran en @c data
    * @return Referencia a un tipo @c int que representa los elementos.
    */

@@ -158,7 +158,17 @@ T DinamicArray<T>::pop_back (){
   if(used() == 0)
     throw std::out_of_range("Empty array");
 
-  T aux = data[used()];
+  T aux = data[used()-1];
   elements--;
   return aux;
+}
+
+template <class T>
+T& DinamicArray<T>::back (){
+  return data[used()-1];
+}
+
+template <class T>
+T& DinamicArray<T>::back () const{
+  return data[used()-1];
 }
