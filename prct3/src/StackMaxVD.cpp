@@ -26,7 +26,10 @@ void StackMaxVD<T>::push(T data) {
 
 template <class T>
 T StackMaxVD<T>::peak() {
-  return v[v.used()].data;
+  if(isEmpty())
+    throw out_of_range("Empty vector");
+
+  return v.back().data;
 }
 
 template <class T>
@@ -40,7 +43,7 @@ T StackMaxVD<T>::max() {
   if (si == 0)
     throw out_of_range("Empty vector");
 
-  return v[si].max;
+  return v.back().max;
 }
 
 template <class T>

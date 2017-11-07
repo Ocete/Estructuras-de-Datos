@@ -13,6 +13,7 @@ int main() {
   cout << "Introduzca los números que quiere introducir en la pila (-1 para parar): " << endl;
 
   cin >> numero;
+
   while(numero != -1){
     prueba.push(numero);
     //prueba_own.push(numero);
@@ -30,7 +31,7 @@ int main() {
 
   int size = prueba.size();
   for(int i = 0; i < size; i++){
-    cout << "Nuevo tope: " << prueba.peak() << ".";
+    cout << "Tope: (" << prueba.peak() << ", " << prueba.max() << "). ";
     cout << "Tamaño actual: " << prueba.size() << endl;
     cout << "Eliminando tope: " << prueba.pop() << ".";
   }
