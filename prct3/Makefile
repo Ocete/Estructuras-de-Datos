@@ -15,7 +15,7 @@ PRJ = practica3
 
 # Las macros se usan en las reglas del makefile como si fuesen variables
 # que se sustituyen por su valor definido anteriormente
-all: $(BIN)/testVDinamico $(BIN)/testNode $(BIN)/testQueue
+all: $(BIN)/test
 
 # ************ Generación de documentación ******************
 documentacion:
@@ -25,14 +25,9 @@ documentacion:
 # ************ Compilación de módulos ************
 # Creamos los tests
 
-$(BIN)/testVDinamico : $(SRC)/testVDinamico.cpp $(INC)/StackMaxVD.h  $(SRC)/StackMaxVD.cpp
-	$(CXX) $(CPPFLAGS) -I$(INC) $(SRC)/testVDinamico.cpp -o $(BIN)/testVDinamico
+$(BIN)/test : $(INC)/stack.h $(INC)/StackMax.h  $(INC)/StackMaxVD.h  $(SRC)/StackMaxVD.cpp  $(SRC)/StackMax.cpp $(INC)/StackMaxQueue.h  $(SRC)/StackMaxQueue.cpp $(SRC)/test.cpp
+	$(CXX) $(CPPFLAGS) -I$(INC) $(SRC)/test.cpp -o $@
 
-$(BIN)/testNode : $(SRC)/testStackMax.cpp $(INC)/StackMax.h  $(SRC)/StackMax.cpp
-	$(CXX) $(CPPFLAGS) -I$(INC) $(SRC)/testStackMax.cpp -o $(BIN)/testNode
-
-$(BIN)/testQueue : $(SRC)/testStackQueue.cpp $(INC)/StackMaxQueue.h  $(SRC)/StackMaxQueue.cpp
-	$(CXX) $(CPPFLAGS) -I$(INC) $(SRC)/testStackMax.cpp -o $(BIN)/testQueue
 
 # ************ Limpieza y encapsulado ************
 clean :
