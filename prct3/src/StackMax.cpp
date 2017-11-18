@@ -5,6 +5,7 @@ using namespace std;
 
 template <class T>
 StackMax<T>::StackMax () {
+  std::cout << "CELDAS ENLAZADAS" << std::endl;
   top = NULL;
 }
 

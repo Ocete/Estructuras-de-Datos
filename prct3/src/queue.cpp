@@ -42,7 +42,7 @@ T queue<T>::peak() {
 
 // Throws exception if isEmpty
 template <class T>
-T queue<T>::remove() {
+T queue<T>::pop() {
   assert(!isEmpty());
   Node * aux = tail;
   T ret_val = tail->data;

@@ -50,7 +50,7 @@ public:
   * @brief Saca un elemento de la cola (el primero introducido).
   * @return Elemento extraído.
   */
-  T remove();
+  T pop();
 /**
   * @brief Consulta si la cola está vacía.
   * @return True si la cola está vacía. False en caso contrario.

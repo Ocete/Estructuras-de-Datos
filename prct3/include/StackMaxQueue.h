@@ -23,7 +23,7 @@
 #include "queue.h"
 
 template <class T>
-class StackMaxQueue {
+class StackMax {
   struct pair {
     T data;
     T max;
@@ -33,7 +33,7 @@ private:
   int elems = 0; /**< Número de elementos en la pila */
 
 public:
-  //StackMax();
+  StackMax();
   //~StackMax();
 /**
   * @brief Añade un elemento de tipo T a la pila. Eficiencia: O(n).

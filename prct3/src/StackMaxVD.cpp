@@ -8,15 +8,16 @@
 
 using namespace std;
 
-/*template <class T>
-StackMaxVD<T>::StackMaxVD() { }
-
 template <class T>
-StackMaxVD<T>::~StackMaxVD() {}
+StackMax<T>::StackMax() { std::cout << "DINAMICO" << std::endl;}
+
+/*
+template <class T>
+StackMax<T>::~StackMax() {}
 */
 
 template <class T>
-void StackMaxVD<T>::push(T data) {
+void StackMax<T>::push(T data) {
   Ownpair<T> pareja;
   pareja.data = data;
   if(isEmpty())
@@ -28,7 +29,7 @@ void StackMaxVD<T>::push(T data) {
 }
 
 template <class T>
-T StackMaxVD<T>::peak() {
+T StackMax<T>::peak() {
   if(isEmpty())
     throw out_of_range("Empty vector");
 
@@ -36,12 +37,12 @@ T StackMaxVD<T>::peak() {
 }
 
 template <class T>
-T StackMaxVD<T>::pop() {
+T StackMax<T>::pop() {
   return v.pop_back().data;
 }
 
 template <class T>
-T StackMaxVD<T>::max() {
+T StackMax<T>::max() {
   int si = v.used();
   if (si == 0)
     throw out_of_range("Empty vector");
@@ -50,12 +51,12 @@ T StackMaxVD<T>::max() {
 }
 
 template <class T>
-int StackMaxVD<T>::size() {
+int StackMax<T>::size() {
   return v.used();
 }
 
 
 template <class T>
-bool StackMaxVD<T>::isEmpty() {
+bool StackMax<T>::isEmpty() {
   return v.used() == 0;
 }

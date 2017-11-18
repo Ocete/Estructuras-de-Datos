@@ -1,8 +1,7 @@
 // José Antonio Álvarez Ocete
 // Yábir García Benchakhtir
 #include <iostream>
-
-#include "StackMaxVD.h"
+#include <stack.h>
 
 using namespace std;
 

@@ -25,11 +25,11 @@ struct Ownpair {
 };  /**< Pare de tope máximo */
 
 template <class T>
-class StackMaxVD {
+class StackMax {
 private:
   DinamicArray<Ownpair<T> > v;  /**< Vector de parejas de tipo T */
 public:
-  //StackMaxVD();
+  StackMax();
   //~StackMaxVD();
   /**
     * @brief Añade un elemento de tipo T a la pila.
