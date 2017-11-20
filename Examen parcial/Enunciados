@@ -1,0 +1,20 @@
+Ejemplo1
+Dados dos conjuntos c1,c2  leer y insertar datos
+calcular la interseccion
+
+EJemplo2
+Dividir un conjunto en dos conjuntos cimpar,cpar
+
+Ejemplo3
+Contruir una función para determinar si un conjunto esta incluido dentro de otro
+
+Ejemplo4
+Una funcion para determinar si un conjunto tiene mas de la mitad de sus elementos
+comunes con otro conjunto (basta con mirar la interseccion de los dos conjuntos)
+
+Ejemplo 5
+dados dos conjuntos decir los elementos de la unión que no están
+en la intersección.
+
+Ejemplo 6
+Función que devuelve si hay más números pares en el conjunto que impares:
