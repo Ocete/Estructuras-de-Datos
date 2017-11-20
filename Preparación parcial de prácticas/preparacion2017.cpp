@@ -114,19 +114,18 @@ void UnionSinInterseccion(const set<int>& s1, const set<int>& s2, set<int>& resu
   }
 }
 
- int main()
- {
-   set<int> c1, c2, c3, res;
+int main() {
+  set<int> c1, c2, c3, res;
 
-   InicializarSemilla();
+  InicializarSemilla();
 
-   // Inicializar conjuntos
-   for (int i=0;i<=10;i++) {
-     // Inserta un entero generado aleatoriamente en el rango [1,100]
-     c1.insert(GeneraEntero(1,50));
-     c2.insert(GeneraEntero(1,50));
-     c3.insert(GeneraEntero(1,50));
-   }
+  // Inicializar conjuntos
+  for (int i=0;i<=10;i++) {
+    // Inserta un entero generado aleatoriamente en el rango [1,100]
+    c1.insert(GeneraEntero(1,50));
+    c2.insert(GeneraEntero(1,50));
+    c3.insert(GeneraEntero(1,50));
+  }
 
    // Imprimir conjuntos
    cout << "A = " << c1 << endl;
