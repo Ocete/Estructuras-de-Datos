@@ -33,7 +33,7 @@ private:
   int elems = 0; /**< Número de elementos en la pila */
 
 public:
-  StackMax();
+  //StackMax();
   //~StackMax();
 /**
   * @brief Añade un elemento de tipo T a la pila. Eficiencia: O(n).

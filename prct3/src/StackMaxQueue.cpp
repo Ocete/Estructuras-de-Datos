@@ -3,8 +3,8 @@
 #include <cassert>
 using namespace std;
 
-template <class T>
-StackMax<T>::StackMax() { std::cout << "QUEUE" << std::endl;}
+//template <class T>
+//StackMax<T>::StackMax() { std::cout << "QUEUE" << std::endl;}
 
 // Throws exception if isEmpty()
 template <class T>

@@ -1,14 +1,34 @@
 // José Antonio Álvarez Ocete
 // Yábir García Benchakhtir
+
 #include <iostream>
 #include <stack.h>
 
 using namespace std;
 
+
+
+string metodo_compilacion(){
+  string metodo;
+
+  #if CUAL_COMPILA==1
+  metodo = "Compilado usando Vector Dinamico.";
+  #elif CUAL_COMPILA==2
+  metodo = "Compilado usando Lista de Celdas enlazadas.";
+  #else
+  metodo = "Compilado usando Cola.";
+  #endif
+
+  return metodo;
+}
+
+
 int main() {
   StackMax<int> prueba;
   int numero;
   string mensaje;
+
+  cout << metodo_compilacion() << endl;
 
   cout << "Ejemplo usando enteros: " << endl;
   cout << "Introduzca los números que quiere introducir en la pila (-1 para parar): " << endl;

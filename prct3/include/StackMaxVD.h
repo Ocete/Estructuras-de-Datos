@@ -29,7 +29,7 @@ class StackMax {
 private:
   DinamicArray<Ownpair<T> > v;  /**< Vector de parejas de tipo T */
 public:
-  StackMax();
+  //StackMax();
   //~StackMaxVD();
   /**
     * @brief Añade un elemento de tipo T a la pila.

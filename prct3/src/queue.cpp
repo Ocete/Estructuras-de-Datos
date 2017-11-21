@@ -1,6 +1,7 @@
 // José Antonio Álvarez Ocete
 // Yábir García Benchakhtir
 #include <cassert> // Para la funcion assert
+#include <string>
 using namespace std;
 
 template <class T>

@@ -8,8 +8,8 @@
 
 using namespace std;
 
-template <class T>
-StackMax<T>::StackMax() { std::cout << "DINAMICO" << std::endl;}
+//template <class T>
+//StackMax<T>::StackMax() {}
 
 /*
 template <class T>
