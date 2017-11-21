@@ -3,14 +3,11 @@
 #include <cassert>
 using namespace std;
 
-//template <class T>
-//StackMax<T>::StackMax() { std::cout << "QUEUE" << std::endl;}
-
 // Throws exception if isEmpty()
 template <class T>
 T StackMax<T>::peak () {
   assert (!isEmpty());
-  return cola.peak().data;
+  return cola.front().data;
 }
 
 template <class T>
@@ -22,9 +19,9 @@ void StackMax<T>::push (T data) {
   } else {
     newPair.max = data > max() ? data : max();
   }
-  cola.add(newPair);
+  cola.push(newPair);
   for (int i=0; i<elems; i++) {
-    cola.add(cola.pop());
+    cola.push(cola.pop());
   }
   elems++;
 }
@@ -42,7 +39,7 @@ T StackMax<T>::pop () {
 template <class T>
 T StackMax<T>::max () {
   assert (!isEmpty());
-  return cola.peak().max;
+  return cola.front().max;
 }
 
 template <class T>

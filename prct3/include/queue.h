@@ -1,61 +1,31 @@
-// José Antonio Álvarez Ocete
-// Yábir García Benchakhtir
-/**
- * @file queue.h
- * @brief Fichero cabecera de la Cola.
- *
- * Almacena un conjunto de celdas en formato LIFO.
- */
-#ifndef _QUEUE_H_
-#define _QUEUE_H_
-
-/**
- * @brief Queue
- *
- * Esta clase representa una cola. Es decir, un cojunto de elementos
- * de tipo T de tipo LIFO. Disponemos de los 4 métodos estándar de
- * uso de colas.
- *
- */
+#ifndef __queue_H__
+#define __queue_H__
 
 template <class T>
-class queue {
-  struct Node {
-    Node * next;
-    T data;
-  };
-private:
-  Node * top; /**< Puntero al primer elemento introducido en la cola. */
-  Node * tail; /**< Puntero al último elemento introducido en la cola. */
-public:
-/**
-  * @brief Constructor de la clase.
-  */
-  queue();
-/**
-  * @brief Destructor de la clase.
-  */
-  ~queue();
-/**
-  * @brief Añade un elemento de tipo T a la cola.
-  * @param data será el elemento a añadir.
-  */
-  void add(T data);
-/**
-  * @brief Consulta el próximo elemento que saldrá de la cola. Lanza excepción si está vacía.
-  * @return Elemento consultado.
-  */
-  T peak();
-/**
-  * @brief Saca un elemento de la cola (el primero introducido).
-  * @return Elemento extraído.
-  */
-  T pop();
-/**
-  * @brief Consulta si la cola está vacía.
-  * @return True si la cola está vacía. False en caso contrario.
-  */
-  bool isEmpty();
+class queue{
+  private:
+    struct Celda{
+      T val;
+      Celda *next;
+
+      Celda():next(0){}
+    };
+
+    Celda *first;
+    Celda *last;
+    int n;
+
+  public:
+    queue();
+    ~queue();
+    bool isEmpty() const;
+    int size() const;
+    void push(const T& val);
+    T pop();
+    T& front();
+    const T& front() const;
+    T& back();
+    const T& back() const;
 };
 
 #include "../src/queue.cpp"
