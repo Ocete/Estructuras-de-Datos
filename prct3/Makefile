@@ -4,6 +4,7 @@
 BIN = ./bin
 OBJ = ./obj
 SRC = ./src
+DOC = ./doc
 INC = ./include
 CXX = g++
 ZIP = ./zip
@@ -31,7 +32,8 @@ $(BIN)/test : $(INC)/stack.h $(INC)/StackMax.h  $(INC)/StackMaxVD.h  $(SRC)/Stac
 
 # ************ Limpieza y encapsulado ************
 clean :
-	-rm -r $(OBJ)/* $(BIN)/* $(ZIP)/*
+	rm -f $(OBJ)/* $(BIN)/* $(ZIP)/*
+	rm -rf $(DOC)/html $(DOC)/latex $(DOC)/man
 
 zip : clean
 	zip -r $(ZIP)/$(PRJ).zip *
