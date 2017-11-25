@@ -9,6 +9,7 @@
 #define _CRONOLOGIA_H_
 
 #include <string>
+#include <map>
 #include "fecha_historica.h"
 #include "vector_dinamico.h"
 
@@ -23,14 +24,8 @@
 
 class Cronologia{
 private:
-  vector_dinamico<FechaHistorica *> v; /**< Vector Dinamico que almacena las fechas históricas */
+  map<int,FechaHistorica *> m; /**< Vector Dinamico que almacena las fechas históricas */
   const char SEPARATOR = '\n';  /**< Separdor entre fechas históricas utilizado al leer datos. */
-/**
-  * @brief Comprueba si el acceso es correcto.
-  * @param i entero cuyo acceso comprobamos: num_eventos > i >= 0.
-  * @return True si el acceso es correcto. False en caso contrario.
-  */
-  bool accesoCorrecto(int i) const;
 /**
   * @brief Busca un elemento por el año en el vector de fechas históricas. Eficiencia: O(log(n)).
   * @param goal referencia a un elemento con la fecha que buscamos.

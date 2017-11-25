@@ -1,92 +1,42 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <map>
 #include "fecha_historica.h"
 #include "cronologia.h"
 using namespace std;
 
-bool Cronologia::accesoCorrecto(int i) const {
-  return i >= 0 && i < getNumFechasHistoricas();
-}
-
-// Devuelve la posición de goal si esta en el vector y -1 si no.
-int Cronologia::binarySearch (FechaHistorica* goal) const {
-  int med, inf = 0, sup = getNumFechasHistoricas()-1;
-  bool enc = false;
-  while ((inf<sup) && !enc) {
-    med = (inf+sup)/2;
-    if (v[med]->getFecha() == goal->getFecha()) {
-      enc = true;
-    } else if (v[med]->getFecha() < goal->getFecha()) {
-      inf = med+1;
-    } else {
-      sup = med-1;
-    }
-  }
-  return enc ? med : -1;
-}
-
-void Cronologia::addOrdenado (FechaHistorica* in) {
-  if (v.getElems() == 0) {
-    v.add(in);
-  } else {
-    int i = binarySearch(in);
-    if (i != -1) {
-      v[i]->unir(*in);
-    } else {
-      i = getNumFechasHistoricas();
-      // Ampliamos la CAP antes de empezar a iterar y actualizamos "elems++"
-      v.add(NULL);
-      while (i > 0 && in->getFecha() < v[i-1]->getFecha()) {
-        v[i] = v [i-1];
-        i--;
-      }
-      v[i] = in;
-    }
-  }
-}
-
-Cronologia::Cronologia() { }
-
-Cronologia::Cronologia(const Cronologia &cron) {
-  for (int i=0; i<cron.getNumFechasHistoricas(); i++) {
-    v.add(cron.v[i]);
-  }
-}
-
 Cronologia& Cronologia::operator = (const Cronologia &cron) {
   if (this != &cron) {
-    v.destroy();
-    for (int i=0; i<cron.getNumFechasHistoricas(); i++) {
-      v.add(cron.v[i]);
+    m.clear();
+    for (map<int,FechaHistorica*>::iterator it=cron.m.begin(); it!=cron.m.end(); it++) {
+      m.insert(*it);
     }
   }
   return *this;
 }
 
 void Cronologia::addFechaHistorica(FechaHistorica* fh) {
-  addOrdenado(fh);
+  m[fh->getFechaHistorica()] = fh;
 }
 
-// Si no se encuentra la fecha devuelve una FechaHistorica vacia
+// Si no se encuentra la fecha devuelve NULL
 FechaHistorica* Cronologia::getFechaHistorica(int fecha) const {
-  FechaHistorica* aux = new FechaHistorica(fecha);
-  int pos = binarySearch(aux);
-  if (pos == -1) {
-    return aux;
+  map<int, FechaHistorica*>::iterator it = m.find(fecha);
+  if (it != m.end()) {
+    return it->second;
   } else {
-    delete aux;
-    return v[pos];
+    return NULL;
   }
 }
 
 int Cronologia::getNumFechasHistoricas() const {
-  return v.getElems();
+  return m.size();
 }
 
 void Cronologia::print() const {
-  for (int i=0; i<getNumFechasHistoricas(); i++) {
-    v[i]->print();
+  for (map<int,FechaHistorica*>::iterator it=cron.m.begin(); it!=cron.m.end(); it++) {
+    it->second->print();
   }
 }
 
