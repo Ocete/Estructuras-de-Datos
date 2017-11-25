@@ -26,6 +26,8 @@ documentacion:
 # ************ Compilación de módulos ************
 # Creamos los tests
 
+#Para elegir el stack con el que se modifica cambiar el archivo stack.h
+
 $(BIN)/test : $(INC)/stack.h $(INC)/StackMax.h  $(INC)/StackMaxVD.h  $(SRC)/StackMaxVD.cpp  $(SRC)/StackMax.cpp $(INC)/StackMaxQueue.h  $(SRC)/StackMaxQueue.cpp $(SRC)/test.cpp
 	$(CXX) $(CPPFLAGS) -I$(INC) $(SRC)/test.cpp -o $@
 
