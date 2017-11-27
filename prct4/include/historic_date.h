@@ -100,6 +100,14 @@ public:
   * @return flujo proporcionado como argumento.
   */
   friend istream& operator >> (istream& is, HistoricDate &hf);
+
+  typedef typename set<string>::iterator iterator;
+  typedef typename set<string>::const_iterator const_iterator;
+
+  iterator begin ();
+  const_iterator cbegin () const;
+  iterator end ();
+  const_iterator cend () const;
 };
 
 #endif

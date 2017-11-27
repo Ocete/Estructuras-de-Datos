@@ -88,3 +88,23 @@ istream& operator >> (istream& is, HistoricDate &hd) {
   }
   return is;
 }
+
+iterator HistoricDate::begin() {
+  set<string>::iterator it = s.begin();
+  return it;
+}
+
+const_iterator HistoricDate::cbegin() {
+  set<string>::iterator it = s.cbegin();
+  return it;
+}
+
+iterator HistoricDate::end() {
+  set<string>::iterator it = s.end();
+  return it;
+}
+
+const_iterator HistoricDate::cend() {
+  set<string>::iterator it = s.cend();
+  return it;
+}
