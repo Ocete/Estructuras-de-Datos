@@ -53,7 +53,7 @@ int HistoricDate::getNumEventos() const {
   return s.size();
 }
 
-int HistoricDate::getdate() const {
+int HistoricDate::getDate() const {
   return date;
 }
 

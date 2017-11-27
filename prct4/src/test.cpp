@@ -1,5 +1,5 @@
-#include "cronologia.h"
-#include "fecha_historica.h"
+#include "cronology.h"
+#include "historic_date.h"
 #include <fstream>
 #include <iostream>
 
@@ -18,7 +18,7 @@ int main(int argc, char * argv[]){
     return 0;
    }
 
-   Cronologia cron1, cron2, cronMerged, cronIntersec;
+   Cronology cron1, cron2, cronMerged, cronIntersec;
    f1 >> cron1;
    f2 >> cron2;
 
@@ -32,17 +32,17 @@ int main(int argc, char * argv[]){
    cronMerged.print();
    cout << "\n\n\n\n\n\t\tIntersección de ambas cronologías: " << endl;
    cronIntersec.print();
-   cout << "\n\n\n\n\n\t\tSubcronología de la intersección entre 1980 y 2000: " << endl;
-   cronIntersec.subcronologia(1990, 2000).print();
+   cout << "\n\n\n\n\n\t\tSubcronología de la intersección entre 1990 y 2000: " << endl;
+   cronIntersec.subcronology(1990, 2000).print();
    cout << "\n\n\n\n\n\t\tSubcronología de la unión con la palabra \"developed\": " << endl;
-   cronMerged.subcronologia("developed").print();
+   cronMerged.subcronology("developed").print();
    cout << "\n\n\n\n\n\t\tEventos en el año 1999 de ambas cronologías: " << endl;
-   cronMerged.getFechaHistorica(1999)->print();
+   cronMerged.getHistoricDate(1999)->print();
 
-   /* Exhibir aquí la funcionalidad programada para el TDA Cronologia / TDA FechaHistorica */
+   /* Exhibir aquí la funcionalidad programada para el TDA cronology / TDA HistoricDate */
 
    // Algunas sugerencias:
-   // - Obtener los eventos acaecidos en un año dado -> cronologia.getFechaHistorica(int fecha);
+   // - Obtener los eventos acaecidos en un año dado -> cronology.getHistoricDate(int fecha);
    // DONE - Obtener la (sub)cronología de eventos históricos acaecidos en [anioDesde, anioHasta], donde anioDesde y anioHasta son proporcionados por el usuario
    // DONE - Obtener la (sub)cronología de eventos históricos asociados a una palabra clave. Ejemplo: la cronología de eventos asociados a "Einstein"
    // DONE - Operadores sobre cronologías, ejemplo: Unión de dos cronologías (la cronología resultante debería estar ordenada)

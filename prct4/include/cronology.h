@@ -5,16 +5,15 @@
  * Almacena un conjunto ordenado de fechas históricas.
  */
 
-#ifndef _CRONOLOGIA_H_
-#define _CRONOLOGIA_H_
+#ifndef _CRONOLOGY_H_
+#define _CRONOLOGY_H_
 
 #include <string>
 #include <map>
-#include "fecha_historica.h"
-#include "vector_dinamico.h"
+#include "historic_date.h"
 
 /**
- * @brief Cronologia
+ * @brief Cronology
  *
  * Conjunto ordenado de fechas históricas al que podemos aplicar diversas
  * operaciones como obtener una fecha histórica específica, la unión de dos
@@ -22,54 +21,42 @@
  *
  */
 
-class Cronologia{
+class Cronology{
 private:
-  map<int,FechaHistorica *> m; /**< Vector Dinamico que almacena las fechas históricas */
+  map<int,HistoricDate *> m; /**< Vector Dinamico que almacena las fechas históricas */
   const char SEPARATOR = '\n';  /**< Separdor entre fechas históricas utilizado al leer datos. */
-/**
-  * @brief Busca un elemento por el año en el vector de fechas históricas. Eficiencia: O(log(n)).
-  * @param goal referencia a un elemento con la fecha que buscamos.
-  * @return Posición del objeto en el vector. En caso de no existir devuelve -1.
-  */
-  int binarySearch (FechaHistorica* goal) const ;
-/**
-  * @brief Añade un elemento de forma ordenada al vector. Eficiencia: O(n).
-  * @param i entero cuyo acceso comprobamos: num_eventos > i >= 0.
-  * @return True si el acceso es correcto. False en caso contrario.
-  */
-  void addOrdenado(FechaHistorica* in);
 public:
 /**
   * @brief Constructor básico de la clase
   */
-  Cronologia();
+  Cronology();
 /**
   * @brief Constructor de copia. Hace una copia @e no-profunda.
   * @param cron objeto a copiar.
   */
-  Cronologia(const Cronologia &cron);
+  Cronology(const Cronology &cron);
 /**
   * @brief Sobrecarga del operador de asignación. Hace una copia @e no-profunda.
   * @param cron objeto a copiar.
   * @return Referencia al objeto copiado.
   */
-  Cronologia& operator = (const Cronologia &cron);
+  Cronology& operator = (const Cronology &cron);
 /**
-  * @brief Añade una fecha Histórica a la Cronologia.
+  * @brief Añade una fecha Histórica a la Cronology.
   * @param fh referencia a añadir.
   */
-  void addFechaHistorica(FechaHistorica* fh);
+  void addHistoricDate(HistoricDate* fh);
 /**
-  * @brief Devuelve una Fecha Historica. Devuelve una fecha Historica vacía si no se encuentra en la cronología. Eficiencia: O(log(n)).
+  * @brief Devuelve una Fecha Historica. Devuelve NULL si no se encuentra en la cronología. Eficiencia: O(log(n)).
   * @param fecha por la que es buscada la Fecha Historica
   * @return Referencia constante a la fecha historica.
   */
-  FechaHistorica* getFechaHistorica(int fecha) const;
+  HistoricDate* getHistoricDate(int fecha) const;
 /**
   * @brief Devuelve el número de fechas históricas almacenadas.
   * @return Número actual de fechas históricas almacenadas.
   */
-  int getNumFechasHistoricas() const;
+  int getNumHistoricDates() const;
 /**
   * @brief Imprime la Cronología por pantalla.
   */
@@ -80,32 +67,32 @@ public:
   * @param anioHasta representa la fecha hasta la cual buscamos.
   * @return Subcronologia mencionada
   */
-  Cronologia subcronologia(int anioDesde, int anioHasta) const;
+  Cronology subcronology(int anioDesde, int anioHasta) const;
 /**
-  * @brief Obtiene la subcronologia con aquellas fechas históricas contengan al menos una vez la clave. Eficiencia: O(n*O(f)), donde f es el método FechaHistorica.contieneClave(string clave).
-  * @param clave es la string a buscar.
+  * @brief Obtiene la subcronologia con aquellas fechas históricas contengan al menos una vez la string key. Eficiencia: O(n*O(f)), donde f es el método HistoricDate.includesKey(string key).
+  * @param key es la string a buscar.
   * @return Subcronologia mencionada.
   */
-  Cronologia subcronologia(string clave) const;
+  Cronology subcronology(string key) const;
 /**
-  * @brief Obtiene la unión entre dos cronologías, uniendo fechas históricas si es necesario. Eficiencia: O(m*k), en el peor caso (donde todas las fechas historicas esta duplicadas), donde m = cron.getNumFechasHistoricas() y k es el k = max{cron.v[i].getNumEventos() : 0 <= i < cron.getNumEventos()}.
+  * @brief Obtiene la unión entre dos cronologías, uniendo fechas históricas si es necesario. Eficiencia: O(m*k), en el peor caso (donde todas las fechas historicas esta duplicadas), donde m = cron.getNumHistoricDates() y k es el k = max{cron.v[i].getNumEventos() : 0 <= i < cron.getNumEventos()}.
   * @param cron es la cronología a unir.
   * @return Subcronologia mencionada.
   */
-  Cronologia mergeCron(const Cronologia &cron) const;
+  Cronology mergeCron(const Cronology &cron) const;
 /**
-  * @brief Obtiene la intersección entre dos cronologías, uniendo las fechas históricas. Eficiencia: O(m*k), donde m = interseccion.getNumFechasHistoricas() y k es el k = max{intereseccion.v[i].getNumEventos() : 0 <= i < interseccion.getNumEventos()}.
+  * @brief Obtiene la intersección entre dos cronologías, uniendo las fechas históricas. Eficiencia: O(m*k), donde m = interseccion.getNumHistoricDates() y k es el k = max{intereseccion.v[i].getNumEventos() : 0 <= i < interseccion.getNumEventos()}.
   * @param cron es la cronología a intersectar.
   * @return Subcronologia mencionada.
   */
-  Cronologia intersecCron(const Cronologia &cron) const;
+  Cronology intersecCron(const Cronology &cron) const;
 /**
   * @brief Función amiga de la clase, lee una Cronología a través del flujo.
   * @param is referencia al flujo de entrada por el que se leerá el objeto.
   * @param cron referencia a un tipo Fecha Historica en la que se guardarán los datos.
   * @return flujo proporcionado como argumento.
   */
-  friend istream& operator >> (istream& is, Cronologia &cron);
+  friend istream& operator >> (istream& is, Cronology &cron);
 };
 
 #endif

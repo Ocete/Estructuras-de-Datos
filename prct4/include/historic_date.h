@@ -82,7 +82,7 @@ public:
   * @brief Devuelve el año de la Fecha Histórica.
   * @return Año de la Fecha Historica.
   */
-  int getFecha() const;
+  int getDate() const;
 /**
   * @brief Imprime la Fecha Histórica por pantalla.
   */
