@@ -114,22 +114,22 @@ istream& operator >> (istream& is, Cronology &cron) {
   return is;
 }
 
-iterator Cronology::begin() {
-  map<int, HistoricDate*>::const_iterator it = m.begin();
+Cronology::iterator begin() {
+  map<int, HistoricDate*>::iterator it = m.begin();
   return it;
 }
 
-const_iterator Cronology::cbegin() {
+Cronology::const_iterator Cronology::cbegin() {
   map<int, HistoricDate*>::const_iterator it = m.cbegin();
   return it;
 }
 
-iterator Cronology::end() {
-  map<int, HistoricDate*>::const_iterator it = m.end();
+Cronology::iterator Cronology::end() {
+  map<int, HistoricDate*>::iterator it = m.end();
   return it;
 }
 
-const_iterator Cronology::cend() {
+Cronology::const_iterator Cronology::cend() {
   map<int, HistoricDate*>::const_iterator it = m.cend();
   return it;
 }
