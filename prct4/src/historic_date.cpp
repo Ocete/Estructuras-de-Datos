@@ -1,4 +1,4 @@
-#include "date_historica.h"
+#include "historic_date.h"
 #include <iostream>
 #include <sstream> // Para el flujo de entrada
 using namespace std;
@@ -49,7 +49,7 @@ void HistoricDate::merge(const HistoricDate &hd) {
   }
 }
 
-int HistoricDate::getNumEventos() const {
+int HistoricDate::getNumEvents() const {
   return s.size();
 }
 
@@ -57,9 +57,9 @@ int HistoricDate::getDate() const {
   return date;
 }
 
-void HistoricDate::print() const {
+void HistoricDate::print(){
   cout << "Año " << date << ":" << endl;
-  for (set<string>::iterator it=hd.s.begin(); it!=hd.s.end(); it++) {
+  for (const_iterator it=cbegin(); it!=cend(); it++) {
     cout << "\t" << *it << endl;
   }
 }
@@ -89,22 +89,18 @@ istream& operator >> (istream& is, HistoricDate &hd) {
   return is;
 }
 
-iterator HistoricDate::begin() {
-  set<string>::iterator it = s.begin();
-  return it;
+HistoricDate::iterator HistoricDate::begin() {
+  return s.begin();
 }
 
-const_iterator HistoricDate::cbegin() {
-  set<string>::iterator it = s.cbegin();
-  return it;
+HistoricDate::const_iterator HistoricDate::cbegin() const{
+  return s.cbegin();
 }
 
-iterator HistoricDate::end() {
-  set<string>::iterator it = s.end();
-  return it;
+HistoricDate::iterator HistoricDate::end() {
+  return s.end();
 }
 
-const_iterator HistoricDate::cend() {
-  set<string>::iterator it = s.cend();
-  return it;
+HistoricDate::const_iterator HistoricDate::cend() const{
+  return s.cend();
 }

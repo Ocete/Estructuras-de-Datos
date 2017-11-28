@@ -32,7 +32,7 @@ public:
   * @brief Constructor básico de la clase
   * @param year fecha en la que ocurren los eventos.
   */
-  HistoricDate(int year);
+  HistoricDate(int year=0);
 /**
   * @brief Constructor de copia. Hace una copia @e profunda.
   * @param hf objeto a copiar.
@@ -86,7 +86,7 @@ public:
 /**
   * @brief Imprime la Fecha Histórica por pantalla.
   */
-  void print() const;
+  void print();
 /**
   * @brief Comprueba si la Fecha Historica contiene la key en alguno de sus eventos. Eficiencia: O(getNumEvents()*m), m = max{getEvent(i).size() : 0 <= i < getNumEvents() }
   * @param key string a buscar.

@@ -1,4 +1,4 @@
-#include "cronology.h"
+#include "Chronology.h"
 #include "historic_date.h"
 #include <fstream>
 #include <iostream>
@@ -18,7 +18,7 @@ int main(int argc, char * argv[]){
     return 0;
    }
 
-   Cronology cron1, cron2, cronMerged, cronIntersec;
+   Chronology cron1, cron2, cronMerged, cronIntersec;
    f1 >> cron1;
    f2 >> cron2;
 
@@ -26,23 +26,23 @@ int main(int argc, char * argv[]){
    //cron2.print();
 
    cronMerged = cron1.mergeCron(cron2);
-   cronIntersec = cron1.intersecCron(cron2);
+   //cronIntersec = cron1.intersecCron(cron2);
 
    cout << "\t\tUnión de ambas cronologías : " << endl;
    cronMerged.print();
-   cout << "\n\n\n\n\n\t\tIntersección de ambas cronologías: " << endl;
-   cronIntersec.print();
-   cout << "\n\n\n\n\n\t\tSubcronología de la intersección entre 1990 y 2000: " << endl;
-   cronIntersec.subcronology(1990, 2000).print();
+   //cout << "\n\n\n\n\n\t\tIntersección de ambas cronologías: " << endl;
+   //cronIntersec.print();
+   //cout << "\n\n\n\n\n\t\tSubcronología de la intersección entre 1990 y 2000: " << endl;
+   //cronIntersec.subChronology(1990, 2000).print();
    cout << "\n\n\n\n\n\t\tSubcronología de la unión con la palabra \"developed\": " << endl;
-   cronMerged.subcronology("developed").print();
+   cronMerged.subChronology("developed").print();
    cout << "\n\n\n\n\n\t\tEventos en el año 1999 de ambas cronologías: " << endl;
    cronMerged.getHistoricDate(1999)->print();
 
-   /* Exhibir aquí la funcionalidad programada para el TDA cronology / TDA HistoricDate */
+   /* Exhibir aquí la funcionalidad programada para el TDA Chronology / TDA HistoricDate */
 
    // Algunas sugerencias:
-   // - Obtener los eventos acaecidos en un año dado -> cronology.getHistoricDate(int fecha);
+   // - Obtener los eventos acaecidos en un año dado -> Chronology.getHistoricDate(int fecha);
    // DONE - Obtener la (sub)cronología de eventos históricos acaecidos en [anioDesde, anioHasta], donde anioDesde y anioHasta son proporcionados por el usuario
    // DONE - Obtener la (sub)cronología de eventos históricos asociados a una palabra clave. Ejemplo: la cronología de eventos asociados a "Einstein"
    // DONE - Operadores sobre cronologías, ejemplo: Unión de dos cronologías (la cronología resultante debería estar ordenada)

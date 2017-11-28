@@ -3,13 +3,13 @@ INC = ./include
 OBJ = ./obj
 BIN = ./bin
 CXX = g++
-CPPFLAGS = -Wall -g  -I$(INC) -c
+CPPFLAGS = -I$(INC) -g
 OPT = -std=c++17
 
-all: $(BIN)/test execute
+all: $(BIN)/test
 
 execute: $(BIN)/test
-	$(BIN)/test /datos/timeline_algorithms.txt /datos/timeline_movies.txt
+	$(BIN)/test ./datos/timeline_algorithms.txt ./datos/timeline_movies.txt
 
 # ************ Generación de documentación ******************
 documentacion:
@@ -18,22 +18,21 @@ documentacion:
 
 # ************ Compilación de módulos ************
 # Creamos los objetos
-$(OBJ)/historic_date.o : $(SRC)/historic_date.cpp $(INC)/historic_date.h
-	g++ $(OPT) -I./$(INC) -c  $(SRC)/historic_date.cpp -o $(OBJ)/historic_date.o
+$(OBJ)/historic_date.o: $(SRC)/historic_date.cpp $(INC)/historic_date.h
+	g++ $(CPPFLAGS) $(OPT)  -c  $(SRC)/historic_date.cpp -o $(OBJ)/historic_date.o
 
-$(OBJ)/cronology.o : $(SRC)/cronology.cpp $(INC)/cronology.h $(INC)/historic_date.h
-	g++ $(OPT) -I./$(INC) -c $(SRC)/cronology.cpp -o $(OBJ)/cronology.o
+$(OBJ)/Chronology.o: $(SRC)/Chronology.cpp $(INC)/Chronology.h $(INC)/historic_date.h
+	g++ $(CPPFLAGS) $(OPT)  -c $(SRC)/Chronology.cpp -o $(OBJ)/Chronology.o
 
-# Creamos test
-$(OBJ)/test.o : $(SRC)/test.cpp $(INC)/cronology.h $(INC)/historic_date.h
-	g++ $(OPT) -I./$(INC) -c $(SRC)/test.cpp -o $(OBJ)/test.o
+$(OBJ)/test.o: $(SRC)/test.cpp $(INC)/Chronology.h $(INC)/historic_date.h
+	g++ $(CPPFLAGS) $(OPT)  -c $(SRC)/test.cpp -o $@
 
-$(BIN)/test : $(OBJ)/test.o $(OBJ)/cronology.o $(OBJ)/historic_date.o
-	g++ $(OBJ)/test.o -o $(BIN)/test $(OBJ)/cronology.o $(OBJ)/historic_date.o
+$(BIN)/test: $(OBJ)/Chronology.o $(OBJ)/historic_date.o $(OBJ)/test.o
+	g++ $(CPPFLAGS) $(OBJ)/test.o $(OBJ)/Chronology.o $(OBJ)/historic_date.o -o $@
 
 # ************ Limpieza ************
 clean :
-	rm -f $(OBJ)/* $(BIN)/* $(LIB)/*
+	rm -f $(OBJ)/* $(BIN)/*
 
 mrproper : clean
 	rm $(BIN)/* doc/html/*

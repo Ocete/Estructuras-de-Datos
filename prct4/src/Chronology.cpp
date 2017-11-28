@@ -2,27 +2,35 @@
 #include <string>
 #include <sstream>
 #include <map>
+#include <utility>
 #include "historic_date.h"
-#include "cronology.h"
+#include "Chronology.h"
 using namespace std;
 
-Cronology& Cronology::operator = (const Cronology &cron) {
+Chronology::Chronology(){}
+
+Chronology& Chronology::operator = (const Chronology &cron) {
   if (this != &cron) {
     m.clear();
-    map<int,HistoricDate*>::const_iterator it;
-    for (it=cron.m.begin(); it!=cron.m.end(); it++) {
-      addHistoricDate(it->second);
+    iterator it;
+    for (it=begin(); it!=end(); it++) {
+      insert(it->second);
     }
   }
   return *this;
 }
 
-void Cronology::addHistoricDate(HistoricDate* fh) {
-  m[fh->getDate()] = fh;
+std::pair<Chronology::iterator, bool> Chronology::insert(HistoricDate* fh) {
+
+  std::pair<Chronology::iterator, bool> inserted;
+  int date = fh->getDate();
+
+  inserted = m.insert(std::pair<int,HistoricDate*> (date,fh));
+  return inserted;
 }
 
 // Si no se encuentra la fecha devuelve NULL
-HistoricDate* Cronology::getHistoricDate(int fecha) const {
+HistoricDate* Chronology::getHistoricDate(int fecha) const {
   map<int, HistoricDate*>::const_iterator it = m.find(fecha);
   if (it != m.end()) {
     return it->second;
@@ -31,52 +39,52 @@ HistoricDate* Cronology::getHistoricDate(int fecha) const {
   }
 }
 
-int Cronology::getNumHistoricDates() const {
+int Chronology::getNumHistoricDates() const {
   return m.size();
 }
 
-void Cronology::print() const {
-  for (map<int,HistoricDate*>::const_iterator it=m.begin(); it!=m.end(); it++) {
+void Chronology::print() const {
+  for (Chronology::const_iterator it=cbegin(); it!=cend(); it++) {
     it->second->print();
   }
 }
 
 // subcronologia entre dos fechas
-Cronology Cronology::subcronology(int anioDesde, int anioHasta) const {
-  Cronology result;
+Chronology Chronology::subChronology(int anioDesde, int anioHasta) const {
+  Chronology result;
   map<int, HistoricDate*>::const_iterator it = m.begin();
   while (it != m.end() && it->second->getDate() <= anioHasta) {
     if (it->second->getDate() >= anioDesde) {
-      result.addHistoricDate(it->second);
+      result.insert(it->second);
     }
     it++;
   }
   return result;
 }
 
-Cronology Cronology::subcronology(string key) const {
-  Cronology cron;
+Chronology Chronology::subChronology(string key) const {
+  Chronology cron;
   map<int, HistoricDate*>::const_iterator it;
   for (it=m.begin(); it != m.end(); it++) {
     if (it->second->includesKey(key)) {
-      cron.addHistoricDate(it->second);
+      cron.insert(it->second);
     }
   }
   return cron;
 }
 
 // Unión de dos cronologías
-Cronology Cronology::mergeCron(const Cronology &cron) const {
-  Cronology result;
-  map<int, HistoricDate*>::const_iterator it, aux;
+Chronology Chronology::mergeCron(const Chronology &cron) const {
+  Chronology result;
+  Chronology::const_iterator it, aux;
 
   for (it = m.begin(); it!=m.end(); it++) {
-    result.addHistoricDate(it->second);
+    result.insert(it->second);
   }
-  for (it = cron.m.begin(); it!=cron.m.end(); it++) {
+  for (it = cron.begin(); it!=cron.end(); it++) {
     aux = result.m.find(it->second->getDate());
     if (aux == result.end()) {
-      result.addHistoricDate(aux->second);
+      result.insert(aux->second);
     } else {
       aux->second->merge(*(it->second));
     }
@@ -86,13 +94,13 @@ Cronology Cronology::mergeCron(const Cronology &cron) const {
 
 // Toma unicamente las fechas que estén en ambas cronologías, tomando de ellas
 // todos los eventos.
-Cronology Cronology::intersecCron(const Cronology &cron) const {
-  Cronology result;
+Chronology Chronology::intersecCron(const Chronology &cron) const {
+  Chronology result;
   map<int, HistoricDate*>::const_iterator it, aux;
   for (it = m.begin(); it!=m.end(); it++) {
     aux = cron.m.find(it->second->getDate());
     if (aux != cron.m.end()) {
-      result.addHistoricDate(aux->second);
+      result.insert(aux->second);
       aux = result.m.find(it->second->getDate());
       aux->second->merge(*(it->second));
     }
@@ -100,7 +108,7 @@ Cronology Cronology::intersecCron(const Cronology &cron) const {
   return result;
 }
 
-istream& operator >> (istream& is, Cronology &cron) {
+istream& operator >> (istream& is, Chronology &cron) {
   string line;
   cron.m.clear();
   HistoricDate* fh = NULL;
@@ -109,27 +117,23 @@ istream& operator >> (istream& is, Cronology &cron) {
     getline(is, line, cron.SEPARATOR);
     istringstream ss(line);
     ss >> *fh;
-    cron.addHistoricDate(fh);
+    cron.insert(fh);
   }
   return is;
 }
 
-Cronology::iterator begin() {
-  map<int, HistoricDate*>::iterator it = m.begin();
-  return it;
+Chronology::iterator Chronology::begin() {
+  return m.begin();
 }
 
-Cronology::const_iterator Cronology::cbegin() {
-  map<int, HistoricDate*>::const_iterator it = m.cbegin();
-  return it;
+Chronology::const_iterator Chronology::cbegin() const {
+  return m.cbegin();
 }
 
-Cronology::iterator Cronology::end() {
-  map<int, HistoricDate*>::iterator it = m.end();
-  return it;
+Chronology::iterator Chronology::end() {
+  return m.end();
 }
 
-Cronology::const_iterator Cronology::cend() {
-  map<int, HistoricDate*>::const_iterator it = m.cend();
-  return it;
+Chronology::const_iterator Chronology::cend() const {
+  return m.cend();
 }
