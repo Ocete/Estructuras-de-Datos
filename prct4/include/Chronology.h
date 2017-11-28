@@ -24,12 +24,12 @@
 
 class Chronology{
 private:
-  map<int,HistoricDate *> m; /**< Vector Dinamico que almacena las fechas históricas */
+  map<int,HistoricDate> m; /**< Vector Dinamico que almacena las fechas históricas */
   const char SEPARATOR = '\n';  /**< Separdor entre fechas históricas utilizado al leer datos. */
 public:
 
-  typedef typename map<int, HistoricDate*>::iterator iterator;
-  typedef typename map<int, HistoricDate*>::const_iterator const_iterator;
+  typedef typename map<int, HistoricDate>::iterator iterator;
+  typedef typename map<int, HistoricDate>::const_iterator const_iterator;
 
 
 /**
@@ -51,13 +51,13 @@ public:
   * @brief Añade una fecha Histórica a la Chronology.
   * @param fh referencia a añadir.
   */
-  std::pair<iterator, bool> insert(HistoricDate* fh);
+  std::pair<iterator, bool> insert(HistoricDate fh);
 /**
   * @brief Devuelve una Fecha Historica. Devuelve NULL si no se encuentra en la cronología. Eficiencia: O(log(n)).
   * @param fecha por la que es buscada la Fecha Historica
   * @return Referencia constante a la fecha historica.
   */
-  HistoricDate* getHistoricDate(int fecha) const;
+  HistoricDate getHistoricDate(int fecha) const;
 /**
   * @brief Devuelve el número de fechas históricas almacenadas.
   * @return Número actual de fechas históricas almacenadas.

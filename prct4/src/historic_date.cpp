@@ -44,7 +44,7 @@ void HistoricDate::addEvent(string event) {
 
 // Si hay eventos dobles, set se foundarga de ellos
 void HistoricDate::merge(const HistoricDate &hd) {
-  for (set<string>::iterator it=hd.s.begin(); it!=hd.s.end(); it++) {
+  for (set<string>::const_iterator it=hd.s.cbegin(); it!=hd.s.cend(); it++) {
     s.insert(*it);
   }
 }
