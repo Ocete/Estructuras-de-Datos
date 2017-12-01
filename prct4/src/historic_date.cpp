@@ -43,8 +43,10 @@ void HistoricDate::addEvent(string event) {
 }
 
 // Si hay eventos dobles, set se foundarga de ellos
-void HistoricDate::merge(const HistoricDate &hd) {
-  for (set<string>::const_iterator it=hd.s.cbegin(); it!=hd.s.cend(); it++) {
+//pongo este const bien chulo de aquí porque si no las funciones constantes
+//que lo llaman dan errores
+void HistoricDate::merge(const HistoricDate &hd){
+  for (HistoricDate::const_iterator it=hd.cbegin(); it!=hd.cend(); it++) {
     s.insert(*it);
   }
 }
@@ -59,7 +61,7 @@ int HistoricDate::getDate() const {
 
 void HistoricDate::print(){
   cout << "Año " << date << ":" << endl;
-  for (const_iterator it=cbegin(); it!=cend(); it++) {
+  for (HistoricDate::const_iterator it=cbegin(); it!=cend(); it++) {
     cout << "\t" << *it << endl;
   }
 }
@@ -87,6 +89,16 @@ istream& operator >> (istream& is, HistoricDate &hd) {
       hd.s.insert(event);
   }
   return is;
+}
+
+ostream& operator<<(ostream& os, const HistoricDate& hd){
+  HistoricDate::iterator it;
+  os << hd.date;
+  for(it=hd.cbegin(); it!=hd.cend(); ++it){
+    os << '#';
+    os << (*it);
+  }
+  return os;
 }
 
 HistoricDate::iterator HistoricDate::begin() {

@@ -57,7 +57,7 @@ public:
   * @param fecha por la que es buscada la Fecha Historica
   * @return Referencia constante a la fecha historica.
   */
-  HistoricDate getHistoricDate(int fecha) const;
+  HistoricDate getHistoricDate(int fecha);
 /**
   * @brief Devuelve el número de fechas históricas almacenadas.
   * @return Número actual de fechas históricas almacenadas.
@@ -66,32 +66,32 @@ public:
 /**
   * @brief Imprime la Cronología por pantalla.
   */
-  void print() const;
+  void print();
 /**
   * @brief Obtiene la subcronologia entre los dos años proporcionados, ambos inclusives. Eficiencia: O(n)
   * @param anioDesde representa la fecha a partir de la cual comenzamos a buscar.
   * @param anioHasta representa la fecha hasta la cual buscamos.
   * @return Subcronologia mencionada
   */
-  Chronology subChronology(int anioDesde, int anioHasta) const;
+  Chronology subChronology(int anioDesde, int anioHasta);
 /**
   * @brief Obtiene la subcronologia con aquellas fechas históricas contengan al menos una vez la string key. Eficiencia: O(n*O(f)), donde f es el método HistoricDate.includesKey(string key).
   * @param key es la string a buscar.
   * @return Subcronologia mencionada.
   */
-  Chronology subChronology(string key) const;
+  Chronology subChronology(string key);
 /**
   * @brief Obtiene la unión entre dos cronologías, uniendo fechas históricas si es necesario. Eficiencia: O(m*k), en el peor caso (donde todas las fechas historicas esta duplicadas), donde m = cron.getNumHistoricDates() y k es el k = max{cron.v[i].getNumEventos() : 0 <= i < cron.getNumEventos()}.
   * @param cron es la cronología a unir.
   * @return Subcronologia mencionada.
   */
-  Chronology mergeCron(const Chronology &cron) const;
+  Chronology mergeCron( Chronology &cron);
 /**
   * @brief Obtiene la intersección entre dos cronologías, uniendo las fechas históricas. Eficiencia: O(m*k), donde m = interseccion.getNumHistoricDates() y k es el k = max{intereseccion.v[i].getNumEventos() : 0 <= i < interseccion.getNumEventos()}.
   * @param cron es la cronología a intersectar.
   * @return Subcronologia mencionada.
   */
-  Chronology intersecCron(const Chronology &cron) const;
+  Chronology intersecCron(const Chronology &cron);
 /**
   * @brief Función amiga de la clase, lee una Cronología a través del flujo.
   * @param is referencia al flujo de entrada por el que se leerá el objeto.
@@ -99,6 +99,8 @@ public:
   * @return flujo proporcionado como argumento.
   */
   friend istream& operator >> (istream& is, Chronology &cron);
+
+  friend ostream& operator << (ostream& os, const Chronology& cron);
 
   iterator begin ();
   const_iterator cbegin () const;

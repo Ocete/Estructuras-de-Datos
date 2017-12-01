@@ -28,6 +28,15 @@ private:
   const char SEPARATOR = '#'; /**< Separador entre eventos al leer datos. */
 
 public:
+
+  typedef typename set<string>::iterator iterator;
+  typedef typename set<string>::const_iterator const_iterator;
+
+  iterator begin ();
+  const_iterator cbegin () const;
+  iterator end ();
+  const_iterator cend () const;
+
 /**
   * @brief Constructor básico de la clase
   * @param year fecha en la que ocurren los eventos.
@@ -101,13 +110,10 @@ public:
   */
   friend istream& operator >> (istream& is, HistoricDate &hf);
 
-  typedef typename set<string>::iterator iterator;
-  typedef typename set<string>::const_iterator const_iterator;
+  friend ostream& operator << (ostream& os, const HistoricDate &hf);
 
-  iterator begin ();
-  const_iterator cbegin () const;
-  iterator end ();
-  const_iterator cend () const;
+
+
 };
 
 #endif

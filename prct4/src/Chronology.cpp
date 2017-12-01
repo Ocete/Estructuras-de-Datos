@@ -30,7 +30,7 @@ std::pair<Chronology::iterator, bool> Chronology::insert(HistoricDate fh) {
 }
 
 // Si no se encuentra la fecha devuelve NULL
-HistoricDate Chronology::getHistoricDate(int fecha) const {
+HistoricDate Chronology::getHistoricDate(int fecha) {
   Chronology::const_iterator it = m.find(fecha);
   if (it != m.end()) {
     return it->second;
@@ -43,14 +43,14 @@ int Chronology::getNumHistoricDates() const {
   return m.size();
 }
 
-void Chronology::print() const {
+void Chronology::print() {
   for (Chronology::const_iterator it=cbegin(); it!=cend(); it++) {
-    it->second.print();
+    cout << it->second;
   }
 }
 
 // subcronologia entre dos fechas
-Chronology Chronology::subChronology(int anioDesde, int anioHasta) const {
+Chronology Chronology::subChronology(int anioDesde, int anioHasta) {
   Chronology result;
   Chronology::const_iterator it = m.begin();
   while (it != m.end() && it->second.getDate() <= anioHasta) {
@@ -62,7 +62,7 @@ Chronology Chronology::subChronology(int anioDesde, int anioHasta) const {
   return result;
 }
 
-Chronology Chronology::subChronology(string key) const {
+Chronology Chronology::subChronology(string key) {
   Chronology cron;
   Chronology::const_iterator it;
   for (it=m.begin(); it != m.end(); it++) {
@@ -74,14 +74,15 @@ Chronology Chronology::subChronology(string key) const {
 }
 
 // Unión de dos cronologías
-Chronology Chronology::mergeCron(const Chronology &cron) const {
+Chronology Chronology::mergeCron(Chronology &cron) {
   Chronology result;
-  Chronology::const_iterator it, aux;
+  Chronology::iterator aux;
+  Chronology::iterator it;
 
-  for (it = m.cbegin(); it!=m.cend(); it++) {
+  for (it = m.begin(); it!=m.end(); it++) {
     result.insert(it->second);
   }
-  for (it = cron.cbegin(); it!=cron.cend(); it++) {
+  for (it = cron.begin(); it!=cron.end(); it++) {
     aux = result.m.find(it->second.getDate());
     if (aux == result.end()) {
       result.insert(aux->second);
@@ -94,15 +95,16 @@ Chronology Chronology::mergeCron(const Chronology &cron) const {
 
 // Toma unicamente las fechas que estén en ambas cronologías, tomando de ellas
 // todos los eventos.
-Chronology Chronology::intersecCron(const Chronology &cron) const {
+Chronology Chronology::intersecCron(const Chronology &cron) {
   Chronology result;
-  Chronology::const_iterator it, aux;
-  for (it = m.cbegin(); it!=m.cend(); it++) {
+  Chronology::iterator it;
+  Chronology::const_iterator aux;
+  for (it = begin(); it!=end(); it++) {
     aux = cron.m.find(it->second.getDate());
-    if (aux != cron.m.cend()) {
+    if (aux != cron.cend()) {
       result.insert(aux->second);
-      aux = result.m.find(it->second.getDate());
-      aux->second.merge(it->second);
+      //aux = result.m.find(it->second.getDate());
+      //aux->second.merge(it->second);
     }
   }
   return result;
@@ -119,6 +121,14 @@ istream& operator >> (istream& is, Chronology &cron) {
     cron.insert(fh);
   }
   return is;
+}
+
+ostream& operator<<(ostream& os, const Chronology& cron){
+  Chronology::const_iterator it;
+  for(it=cron.cbegin(); it!=cron.cend(); ++it){
+    os << it->second << std::endl;
+  }
+  return os;
 }
 
 Chronology::iterator Chronology::begin() {
