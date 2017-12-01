@@ -37,7 +37,7 @@ int main(int argc, char * argv[]){
    cout << "\n\n\n\n\n\t\tSubcronología de la unión con la palabra \"developed\": " << endl;
    cronMerged.subChronology("developed").print();
    cout << "\n\n\n\n\n\t\tEventos en el año 1999 de ambas cronologías: " << endl;
-   cronMerged.getHistoricDate(1999)->print();
+   cronMerged.getHistoricDate(1999).print();
 
    /* Exhibir aquí la funcionalidad programada para el TDA Chronology / TDA HistoricDate */
 
