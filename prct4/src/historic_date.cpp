@@ -78,29 +78,6 @@ bool HistoricDate::includesKey(string key) const {
   return found;
 }
 
-void HistoricDate::insert(string in){
-  s.insert(in);
-}
-
-void HistoricDate::clear(){
-  s.clear();
-}
-
-int HistoricDate::size() const{
-  return s.size();
-}
-
-HistoricDate HistoricDate::findAll(string key) const{
-  HistoricDate result;
-  HistoricDate::const_iterator it;
-  for (it=cbegin(); it != cend(); it++) {
-    if (it->find(key) != string::npos)
-      result.insert(*it);
-  }
-
-  return result;
-}
-
 istream& operator >> (istream& is, HistoricDate &hd) {
   string lecture;
   getline(is, lecture, hd.SEPARATOR);
@@ -108,7 +85,7 @@ istream& operator >> (istream& is, HistoricDate &hd) {
   string event;
   hd.clear();
   while( getline(is, event, hd.SEPARATOR)) {
-    hd.insert(event);
+    hd.addEvent(event);
   }
   return is;
 }
@@ -121,6 +98,20 @@ ostream& operator<<(ostream& os, const HistoricDate& hd){
     os << (*it);
   }
   return os;
+}
+
+void HistoricDate::clear(){
+  s.clear();
+}
+
+HistoricDate HistoricDate::findAll(string key) const{
+  HistoricDate result;
+  HistoricDate::const_iterator it;
+  for (it=cbegin(); it != cend(); it++) {
+    if (it->find(key) != string::npos)
+      result.addEvent(*it);
+  }
+  return result;
 }
 
 HistoricDate::iterator HistoricDate::begin() {

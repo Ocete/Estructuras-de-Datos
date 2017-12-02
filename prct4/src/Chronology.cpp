@@ -48,10 +48,6 @@ HistoricDate Chronology::getHistoricDate(int fecha) {
   }
 }
 
-int Chronology::getNumHistoricDates() const {
-  return m.size();
-}
-
 void Chronology::print() const {
   for (Chronology::const_iterator it=cbegin(); it!=cend(); it++) {
     it->second.print();
@@ -90,43 +86,6 @@ Chronology Chronology::subChronology(string key) const {
     }
   }
   return cron;
-}
-
-double Chronology::mean(){
-
-  double result = (numEvents() + 0.0) / numYears();
-  return result;
-}
-
-HistoricDate Chronology::trend(){
-  Chronology::const_iterator it;
-  int num_eventos = -1;
-  int year;
-
-  for (it=m.begin(); it != m.end(); it++) {
-    if(it->second.size() > num_eventos){
-      num_eventos = it->second.size();
-      year = it->second.getDate();
-    }
-  }
-
-
-  return m.at(year);
-}
-
-int Chronology::numYears(){
-  return m.size();
-}
-
-int Chronology::numEvents(){
-  Chronology::const_iterator it;
-  int num = 0;
-
-  for (it=m.begin(); it != m.end(); it++) {
-    num += (it->second).size();
-  }
-
-  return num;
 }
 
 // Unión de dos cronologías
@@ -184,6 +143,40 @@ ostream& operator<<(ostream& os, const Chronology& cron) {
     cout << endl;
   }
   return os;
+}
+
+double Chronology::mean(){
+  double result = (numEvents() + 0.0) / numYears();
+  return result;
+}
+
+HistoricDate Chronology::trend(){
+  Chronology::const_iterator it;
+  int num_eventos = -1;
+  int year;
+
+  for (it=m.begin(); it != m.end(); it++) {
+    if(it->second.getNumEvents() > num_eventos){
+      num_eventos = it->second.getNumEvents();
+      year = it->second.getDate();
+    }
+  }
+
+
+  return m.at(year);
+}
+
+int Chronology::numYears(){
+  return m.size();
+}
+
+int Chronology::numEvents(){
+  Chronology::const_iterator it;
+  int num = 0;
+  for (it=m.begin(); it != m.end(); it++) {
+    num += (it->second).getNumEvents();
+  }
+  return num;
 }
 
 Chronology::iterator Chronology::begin() {
