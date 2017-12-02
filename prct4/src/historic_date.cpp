@@ -78,15 +78,37 @@ bool HistoricDate::includesKey(string key) const {
   return found;
 }
 
+void HistoricDate::insert(string in){
+  s.insert(in);
+}
+
+void HistoricDate::clear(){
+  s.clear();
+}
+
+int HistoricDate::size() const{
+  return s.size();
+}
+
+HistoricDate HistoricDate::findAll(string key) const{
+  HistoricDate result;
+  HistoricDate::const_iterator it;
+  for (it=cbegin(); it != cend(); it++) {
+    if (it->find(key) != string::npos)
+      result.insert(*it);
+  }
+
+  return result;
+}
+
 istream& operator >> (istream& is, HistoricDate &hd) {
   string lecture;
   getline(is, lecture, hd.SEPARATOR);
   hd.date = stoi(lecture);
-
-  while( is.good() ) {
-      string event;
-      getline(is, event, hd.SEPARATOR);
-      hd.s.insert(event);
+  string event;
+  hd.clear();
+  while( getline(is, event, hd.SEPARATOR)) {
+    hd.insert(event);
   }
   return is;
 }

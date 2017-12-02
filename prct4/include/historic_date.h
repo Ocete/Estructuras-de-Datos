@@ -108,10 +108,16 @@ public:
   * @param hf referencia a un tipo Fecha Historica en la que se guardarán los datos.
   * @return flujo proporcionado como argumento.
   */
+
+  HistoricDate findAll(string) const;
+
   friend istream& operator >> (istream& is, HistoricDate &hf);
 
   friend ostream& operator << (ostream& os, const HistoricDate &hf);
 
+  void insert(string);
+  void clear();
+  int size() const;
 
 
 };
