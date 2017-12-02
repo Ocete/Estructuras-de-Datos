@@ -11,6 +11,9 @@ all: $(BIN)/test
 execute: $(BIN)/test
 	$(BIN)/test ./datos/timeline_algorithms.txt ./datos/timeline_movies.txt
 
+valgrind: $(BIN)/test
+	valgrind --leak-check=full $(BIN)/test ./datos/timeline_algorithms.txt ./datos/timeline_movies.txt
+
 # ************ Generación de documentación ******************
 documentacion:
 	doxygen doc/doxys/Doxyfile

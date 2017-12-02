@@ -30,16 +30,16 @@ int main(int argc, char * argv[]){
    cron1.intersecCron(cron2, cronIntersec);
 
    cout << "\t\tUnión de ambas cronologías : " << endl;
-   //cronMerged.print();
+   cronMerged.print();
 
    cout << "\n\n\n\n\n\t\tIntersección de ambas cronologías: " << endl;
-   //cronIntersec.print();
+   cronIntersec.print();
 
    cout << "\n\n\n\n\n\t\tSubcronología de la intersección entre 1990 y 2000: " << endl;
-   //cronIntersec.subChronology(1990, 2000).print();
+   cronIntersec.subChronology(1990, 2000).print();
 
    cout << "\n\n\n\n\n\t\tSubcronología de la intersección con la palabra \"developed\": " << endl;
-   //cronIntersec.subChronology("developed").print();
+   cronIntersec.subChronology("developed").print();
 
    cout << "\n\n\n\n\n\t\tEventos en el año 2002 de ambas cronologías: " << endl;
    cronMerged.getHistoricDate(2002).print();
