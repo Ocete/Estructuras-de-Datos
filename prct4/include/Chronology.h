@@ -25,7 +25,7 @@
 class Chronology{
 private:
   map<int,HistoricDate> m; /**< Vector Dinamico que almacena las fechas históricas */
-  const char SEPARATOR = '\n';  /**< Separdor entre fechas históricas utilizado al leer datos. */
+  const char SEPARATOR = '\r';  /**< Separdor entre fechas históricas utilizado al leer datos. */
 public:
 
   typedef typename map<int, HistoricDate>::iterator iterator;
@@ -47,6 +47,7 @@ public:
   * @return Referencia al objeto copiado.
   */
   Chronology& operator = (const Chronology &cron);
+
 /**
   * @brief Añade una fecha Histórica a la Chronology.
   * @param fh referencia a añadir.
@@ -105,6 +106,11 @@ public:
   friend istream& operator >> (istream& is, Chronology &cron);
 
   friend ostream& operator << (ostream& os, const Chronology& cron);
+
+  double mean();
+  int numYears();
+  int numEvents();
+  HistoricDate trend();
 
   iterator begin ();
   const_iterator cbegin () const;
