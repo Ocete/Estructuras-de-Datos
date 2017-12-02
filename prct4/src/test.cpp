@@ -24,25 +24,45 @@ int main(int argc, char * argv[]){
    f2 >> cron2;
 
    //cron1.print();
+   //cout << cron1;
    //cron2.print();
 
    cron1.mergeCron(cron2, cronMerged);
    cron1.intersecCron(cron2, cronIntersec);
 
-   cout << "\t\tUnión de ambas cronologías : " << endl;
-   cronMerged.print();
+   //cout << "\t\tUnión de ambas cronologías : " << endl;
+   //cronMerged.print();
 
-   cout << "\n\n\n\n\n\t\tIntersección de ambas cronologías: " << endl;
-   cronIntersec.print();
+   cout << "===================================" << endl;
+   cout << "Intersección de ambas cronologías: " << endl;
+   cout << "===================================" << endl;
+   cout << cronIntersec;
 
-   cout << "\n\n\n\n\n\t\tSubcronología de la intersección entre 1990 y 2000: " << endl;
+   cout << "===================================" << endl;
+   cout << "Subcronología de la intersección entre 1990 y 2000: " << endl;
+   cout << "===================================" << endl;
+   //cout << "\n\n\n\n\n\t\tSubcronología de la intersección entre 1990 y 2000: " << endl;
    cronIntersec.subChronology(1990, 2000).print();
 
-   cout << "\n\n\n\n\n\t\tSubcronología de la intersección con la palabra \"developed\": " << endl;
+   cout << "===================================" << endl;
+   cout << "Subcronología de la intersección con la palabra \"developed\": " << endl;
+   cout << "===================================" << endl;
+   //cout << "\n\n\n\n\n\t\tSubcronología de la intersección con la palabra \"developed\": " << endl;
    cronIntersec.subChronology("developed").print();
 
-   cout << "\n\n\n\n\n\t\tEventos en el año 2002 de ambas cronologías: " << endl;
+   cout << "===================================" << endl;
+   cout << "Eventos en el año 2002 de ambas cronologías: " << endl;
+   cout << "===================================" << endl;
+   //cout << "\n\n\n\n\n\t\tEventos en el año 2002 de ambas cronologías: " << endl;
    cronMerged.getHistoricDate(2002).print();
+
+   cout << "===================================" << endl;
+   cout << "Media de eventos por año: ";
+   cout << cron1.mean() << endl;
+   cout << "Año con más eventos en la cronología 1: " << endl;
+   cron1.trend().print();
+   cout << "Total de eventos: " << cron1.numEvents() << endl;
+   cout << "Total de años: " << cron1.numYears() << endl;
 
    /* Exhibir aquí la funcionalidad programada para el TDA Chronology / TDA HistoricDate */
 
