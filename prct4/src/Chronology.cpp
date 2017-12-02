@@ -79,12 +79,54 @@ Chronology Chronology::subChronology(int anioDesde, int anioHasta) const {
 Chronology Chronology::subChronology(string key) const {
   Chronology cron;
   Chronology::const_iterator it;
+  HistoricDate::iterator hit;
   for (it=m.begin(); it != m.end(); it++) {
     if (it->second.includesKey(key)) {
-      cron.insert(it->second);
+      //We have to add just the events with the word
+      HistoricDate event(it->first);
+      //Insert a Historic Date with all the event only containing key
+      event.merge(it->second.findAll(key));
+      cron.insert(event);
     }
   }
   return cron;
+}
+
+double Chronology::mean(){
+
+  double result = (numEvents() + 0.0) / numYears();
+  return result;
+}
+
+HistoricDate Chronology::trend(){
+  Chronology::const_iterator it;
+  int num_eventos = -1;
+  int year;
+
+  for (it=m.begin(); it != m.end(); it++) {
+    if(it->second.size() > num_eventos){
+      num_eventos = it->second.size();
+      year = it->second.getDate();
+    }
+  }
+
+
+  return m.at(year);
+}
+
+int Chronology::numYears(){
+  return m.size();
+}
+
+int Chronology::numEvents(){
+  Chronology::const_iterator it;
+  int num = 0;
+
+  for (it=m.begin(); it != m.end(); it++) {
+    num += (it->second).size();
+  }
+
+  return num;
 }
 
 // Unión de dos cronologías
@@ -93,7 +135,7 @@ void Chronology::mergeCron(Chronology &cron, Chronology &result) {
   Chronology::iterator aux;
   Chronology::iterator it;
 
-  for (it = m.begin(); it!=m.end(); it++) {
+  for (it = begin(); it!=end(); it++) {
     result.insert(it->second);
   }
   for (it = cron.begin(); it!=cron.end(); it++) {
@@ -139,6 +181,7 @@ ostream& operator<<(ostream& os, const Chronology& cron) {
   Chronology::const_iterator it;
   for(it=cron.cbegin(); it!=cron.cend(); ++it){
     os << it->second << std::endl;
+    cout << endl;
   }
   return os;
 }
