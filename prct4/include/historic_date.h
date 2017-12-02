@@ -58,19 +58,19 @@ public:
   * @param hf Fecha a comprar.
   * @return True si el @año es el mismo, independientemente de los eventos.
   */
-  bool operator == (HistoricDate hf);
+  bool operator == (HistoricDate hf) const;
 /**
   * @brief Sobrecarga del operador de comparación menor.
   * @param hf Fecha Historica a comprar.
   * @return True si el @e año es el menor, independientemente de los eventos.
   */
-  bool operator < (HistoricDate hf);
+  bool operator < (HistoricDate hf) const;
 /**
   * @brief Sobrecarga del operador de comparación mayor.
   * @param hf Fecha Historica a comprar.
   * @return True si el @e año es el mayor, independientemente de los eventos.
   */
-  bool operator > (HistoricDate hf);
+  bool operator > (HistoricDate hf) const;
 /**
   * @brief Añade un evento a la Fecha Historica. Eficiencia: O(1).
   * @param hf Fecha Historica a comprar.
@@ -95,7 +95,7 @@ public:
 /**
   * @brief Imprime la Fecha Histórica por pantalla.
   */
-  void print();
+  void print() const;
 /**
   * @brief Comprueba si la Fecha Historica contiene la key en alguno de sus eventos. Eficiencia: O(getNumEvents()*m), m = max{getEvent(i).size() : 0 <= i < getNumEvents() }
   * @param key string a buscar.

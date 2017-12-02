@@ -25,15 +25,15 @@ HistoricDate& HistoricDate::operator=(const HistoricDate &hd) {
   return *this;
 }
 
-bool HistoricDate::operator==(HistoricDate hd) {
+bool HistoricDate::operator==(HistoricDate hd) const {
   return date == hd.date;
 }
 
-bool HistoricDate::operator<(HistoricDate hd) {
+bool HistoricDate::operator<(HistoricDate hd) const {
   return date < hd.date;
 }
 
-bool HistoricDate::operator>(HistoricDate hd) {
+bool HistoricDate::operator>(HistoricDate hd) const {
   return date > hd.date;
 }
 
@@ -59,10 +59,10 @@ int HistoricDate::getDate() const {
   return date;
 }
 
-void HistoricDate::print(){
-  cout << "Año " << date << ":" << endl;
+void HistoricDate::print() const {
+  cout << "\tAño " << date << ":" << endl;
   for (HistoricDate::const_iterator it=cbegin(); it!=cend(); it++) {
-    cout << "\t" << *it << endl;
+    cout << *it << endl;
   }
 }
 

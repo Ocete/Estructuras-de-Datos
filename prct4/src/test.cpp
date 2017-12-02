@@ -18,6 +18,7 @@ int main(int argc, char * argv[]){
     return 0;
    }
 
+
    Chronology cron1, cron2, cronMerged, cronIntersec;
    f1 >> cron1;
    f2 >> cron2;
@@ -25,19 +26,23 @@ int main(int argc, char * argv[]){
    //cron1.print();
    //cron2.print();
 
-   cronMerged = cron1.mergeCron(cron2);
-   //cronIntersec = cron1.intersecCron(cron2);
+   cron1.mergeCron(cron2, cronMerged);
+   cron1.intersecCron(cron2, cronIntersec);
 
    cout << "\t\tUnión de ambas cronologías : " << endl;
-   cronMerged.print();
-   //cout << "\n\n\n\n\n\t\tIntersección de ambas cronologías: " << endl;
+   //cronMerged.print();
+
+   cout << "\n\n\n\n\n\t\tIntersección de ambas cronologías: " << endl;
    //cronIntersec.print();
-   //cout << "\n\n\n\n\n\t\tSubcronología de la intersección entre 1990 y 2000: " << endl;
+
+   cout << "\n\n\n\n\n\t\tSubcronología de la intersección entre 1990 y 2000: " << endl;
    //cronIntersec.subChronology(1990, 2000).print();
-   cout << "\n\n\n\n\n\t\tSubcronología de la unión con la palabra \"developed\": " << endl;
-   cronMerged.subChronology("developed").print();
-   cout << "\n\n\n\n\n\t\tEventos en el año 1999 de ambas cronologías: " << endl;
-   cronMerged.getHistoricDate(1999).print();
+
+   cout << "\n\n\n\n\n\t\tSubcronología de la intersección con la palabra \"developed\": " << endl;
+   //cronIntersec.subChronology("developed").print();
+
+   cout << "\n\n\n\n\n\t\tEventos en el año 2002 de ambas cronologías: " << endl;
+   cronMerged.getHistoricDate(2002).print();
 
    /* Exhibir aquí la funcionalidad programada para el TDA Chronology / TDA HistoricDate */
 
