@@ -2,6 +2,8 @@ SRC = ./src
 INC = ./include
 OBJ = ./obj
 BIN = ./bin
+ZIP = ./zip
+PRJ = prct4
 CXX = g++
 CPPFLAGS = -I$(INC) -g
 OPT = -std=c++17
@@ -34,7 +36,10 @@ $(BIN)/test: $(OBJ)/Chronology.o $(OBJ)/historic_date.o $(OBJ)/test.o
 
 # ************ Limpieza ************
 clean :
-	rm -rf $(OBJ)/* $(BIN)/* ./doc/html ./doc/latex
+	rm -rf $(OBJ)/* $(BIN)/* ./doc/html ./doc/latex $(ZIP)/*
 
 mrproper : clean
 	rm $(BIN)/* doc/html/*
+
+zip : clean
+	zip -r $(ZIP)/$(PRJ).zip *
