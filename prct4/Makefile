@@ -18,7 +18,6 @@ valgrind: $(BIN)/test
 documentacion:
 	doxygen doc/doxys/Doxyfile
 
-
 # ************ Compilación de módulos ************
 # Creamos los objetos
 $(OBJ)/historic_date.o: $(SRC)/historic_date.cpp $(INC)/historic_date.h
@@ -35,7 +34,7 @@ $(BIN)/test: $(OBJ)/Chronology.o $(OBJ)/historic_date.o $(OBJ)/test.o
 
 # ************ Limpieza ************
 clean :
-	rm -f $(OBJ)/* $(BIN)/*
+	rm -rf $(OBJ)/* $(BIN)/* ./doc/html ./doc/latex
 
 mrproper : clean
 	rm $(BIN)/* doc/html/*
