@@ -38,7 +38,7 @@ $(BIN)/quienesquien: $(OBJ)/main.o $(OBJ)/quienesquien.o
 
 # Creamos los objetos
 $(OBJ)/main.o: $(SRC)/main.cpp $(OBJ)/pregunta.o $(OBJ)/quienesquien.o
-	$(CXX) -c $(SRC)/main.cpp -o $(OBJ)/main.o $(CPPFLAGS)	
+	$(CXX) -c $(SRC)/main.cpp -o $(OBJ)/main.o $(CPPFLAGS)
 
 $(OBJ)/quienesquien.o: $(SRC)/quienesquien.cpp $(OBJ)/pregunta.o
 	$(CXX) -c $(SRC)/quienesquien.cpp -o $(OBJ)/quienesquien.o $(CPPFLAGS)
@@ -49,7 +49,7 @@ $(OBJ)/pregunta.o: $(SRC)/pregunta.cpp
 
 # ************ Limpieza y encapsulado ************
 clean :
-	-rm -r $(OBJ)/* $(BIN)/* $(ZIP)/*
+	-rm -r $(OBJ)/* $(BIN)/* $(ZIP)/* documentacion
 
 zip : clean
 	zip -r $(ZIP)/$(PRJ).zip *

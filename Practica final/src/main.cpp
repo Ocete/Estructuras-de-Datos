@@ -12,31 +12,30 @@ int main(int argc, char * argv[]){
 	bool jugar = false;
 	bool limpiar = false;
 	QuienEsQuien quienEsQuien;
-	
+
 	if(argc == 2){
-		string parametroAleatorio = "aleatorio";
-		if(argv[1]== parametroAleatorio){
-			cout << "Creando un QuienEsQuien aleatorio"<< endl;
-			int numero_de_personajes;
-		   	int numero_de_atributos;
+	string parametroAleatorio = "aleatorio";
+	if(argv[1]== parametroAleatorio){
+		cout << "Creando un QuienEsQuien aleatorio"<< endl;
+		int numero_de_personajes;
+   	int numero_de_atributos;
 
-		   	do{
-		   		cout << "¿Número de personajes? ";
-		   		cin >>numero_de_personajes;
-		   	}while(numero_de_personajes<=0);
+   	do{
+   		cout << "¿Número de personajes? ";
+   		cin >>numero_de_personajes;
+   	}while(numero_de_personajes<=0);
 
-		   	quienEsQuien.tablero_aleatorio(numero_de_personajes);
+   	quienEsQuien.tablero_aleatorio(numero_de_personajes);
 
-		   	string nombreFicheroSalida = string("datos/tablero") +
-		   		"-num-per="+to_string(numero_de_personajes);
+   	string nombreFicheroSalida = string("datos/tablero") +
+   		"-num-per="+to_string(numero_de_personajes);
 
-		   	cout << "Guardando tablero aleatorio en "<<nombreFicheroSalida<<endl;
-		   	ofstream archivoDeSalida(nombreFicheroSalida);
-		   	archivoDeSalida << quienEsQuien;
+   	cout << "Guardando tablero aleatorio en "<<nombreFicheroSalida<<endl;
+   	ofstream archivoDeSalida(nombreFicheroSalida);
+   	archivoDeSalida << quienEsQuien;
 
-		   	cout << "Guardado"<<endl;
-		   	return 0;
-
+   	cout << "Guardado"<<endl;
+   	return 0;
 		}else{
 			cout << "Cargando fichero para jugar'"<< argv[1] <<"'"<< endl;
 			ifstream f (argv[1]);
@@ -73,20 +72,20 @@ int main(int argc, char * argv[]){
 
 	quienEsQuien.mostrar_estructuras_leidas();
 	quienEsQuien.usar_arbol(quienEsQuien.crear_arbol());
-	
+
 	cout << "=========== Arbol en crudo ===========" << endl;
 	quienEsQuien.escribir_arbol_completo();
-	
+
 	cout << "Profundidad promedio de las hojas del arbol: ";
-	cout << quienEsQuien.profundidad_promedio_hojas() << endl; 
+	cout << quienEsQuien.profundidad_promedio_hojas() << endl;
 	cout << "======================================" << endl << endl << endl;
 
 	quienEsQuien.eliminar_nodos_redundantes();
-	
+
 	cout << "=========== Arbol ===================="<<endl;
 	quienEsQuien.escribir_arbol_completo();
 	cout << "Profundidad promedio de las hojas del arbol: ";
-	cout << quienEsQuien.profundidad_promedio_hojas()<<endl; 
+	cout << quienEsQuien.profundidad_promedio_hojas()<<endl;
 	cout << "======================================" << endl << endl << endl;
 
 	if(jugar){
