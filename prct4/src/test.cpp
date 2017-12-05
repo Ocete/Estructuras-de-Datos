@@ -1,3 +1,6 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
+
 #include "Chronology.h"
 #include "historic_date.h"
 #include <fstream>

@@ -1,3 +1,6 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
+
 /**
  * @file cronologia.h
  * @brief Fichero cabecera de la Cronologia.

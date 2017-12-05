@@ -1,3 +1,6 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
+
 /**
  * @file historic_date.h
  * @brief Fichero cabecera de la date histórica.

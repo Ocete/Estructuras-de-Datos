@@ -1,3 +1,6 @@
+// José Antonio Álvarez Ocete
+// Yábir García Benchakhtir
+
 #include "historic_date.h"
 #include <iostream>
 #include <sstream> // Para el flujo de entrada
