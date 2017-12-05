@@ -55,7 +55,6 @@ void QuienEsQuien::mostrar_estructuras_leidas(){
 	cout << "atributos:  "<< (this->atributos)  << endl;
 	cout << "tablero:    "<< endl;
 
-
 	// Escribe la cabecera del tablero
 	for(vector<string>::iterator it_atributos = this->atributos.begin();
 		it_atributos != this->atributos.end();
@@ -211,15 +210,16 @@ vector<bool> convertir_a_vector_bool(int n, int digitos) {
 
 bintree<Pregunta> QuienEsQuien::crear_arbol()
 {
-
-	//TODO :D:D
-
 	bintree<Pregunta> arbol;
+
+
+
 	return arbol;
 }
 
 void QuienEsQuien::usar_arbol(bintree<Pregunta> arbol_nuevo){
 	arbol = arbol_nuevo;
+	jugada_actual = arbol.root();
 }
 
 void QuienEsQuien::iniciar_juego(){
@@ -227,8 +227,15 @@ void QuienEsQuien::iniciar_juego(){
 }
 
 set<string> QuienEsQuien::informacion_jugada(bintree<Pregunta>::node jugada_actual){
-	set<string> personajes_levantados;
-	
+	set<string> personajes_levantados, aux;
+	if ( (*jugada_actual).es_personaje() ) {
+		personajes_levantados.insert( (*jugada_actual).obtener_personaje() );
+	} else {
+		aux = informacion_jugada(jugada_actual.left());
+		personajes_levantados.insert(aux.begin(), aux.end());
+		aux = informacion_jugada(jugada_actual.right());
+		personajes_levantados.insert(aux.begin(), aux.end());
+	}
 	return personajes_levantados;
 }
 
@@ -260,7 +267,8 @@ void QuienEsQuien::eliminar_nodos_redundantes(){
 }
 
 float QuienEsQuien::profundidad_promedio_hojas(){
-	//TODO :)
+
+
 
 	return -1;
 }
