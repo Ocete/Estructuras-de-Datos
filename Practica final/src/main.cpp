@@ -91,5 +91,31 @@ int main(int argc, char * argv[]){
 	if( jugar ){
 		quienEsQuien.iniciar_juego();
 	}
+
+	cout << "\n\n========= Arbol antes de eliminar ===================="<<endl;
+	quienEsQuien.escribir_arbol_completo();
+	cout << "Profundidad promedio de las hojas del arbol: ";
+	cout << quienEsQuien.profundidad_promedio_hojas()<<endl;
+	cout << "========================================================" << endl << endl;
+
+	cout << "Eliminemos a Ana del arbol" << endl;
+	quienEsQuien.elimina_personaje("Ana");
+
+	cout << "\n========= Arbol después de eliminar a Ana ============="<<endl;
+	quienEsQuien.escribir_arbol_completo();
+	cout << "Profundidad promedio de las hojas del arbol: ";
+	cout << quienEsQuien.profundidad_promedio_hojas()<<endl;
+	cout << "========================================================" << endl << endl;
+
+	cout << "Eliminemos a Pilar del arbol" << endl;
+	quienEsQuien.elimina_personaje("Pilar");
+
+	cout << "\n========== Arbol después de eliminar a Pilar =========="<<endl;
+	quienEsQuien.escribir_arbol_completo();
+	cout << "Profundidad promedio de las hojas del arbol: ";
+	cout << quienEsQuien.profundidad_promedio_hojas()<<endl;
+	cout << "========================================================" << endl << endl << endl;
+
+	quienEsQuien.mostrar_estructuras_leidas();
 	return 0;
 }

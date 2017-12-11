@@ -498,17 +498,33 @@ void QuienEsQuien::preguntas_formuladas (bintree<Pregunta>::node jugada) {
 	}
 }
 
+//Prec.: Al menos dos personajes en el arbol
 void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas) {
+	int i_pregunta = 0;
+	bintree<Pregunta>::node jugada = arbol.root();
 
+	personajes.push_back(nombre);
+	tablero.push_back(caracteristicas);
+
+	while ( (*jugada).es_pregunta() &&
+				(*jugada).obtener_pregunta() == atributos[i_pregunta]) {
+		jugada = caracteristicas[i_pregunta] ? jugada.left() : jugada.right();
+	}
+
+	if (jugada == arbol.root()) {
+
+	} else {
+
+	}
 }
 
+//Prec.: Al menos dos personajes en el arbol
 void QuienEsQuien::elimina_personaje (string nombre) {
 	int i_pj = 0, i_pregunta = 0;
-	bintree<Pregunta>::node jugada = arbol.root();
+	bintree<Pregunta>::node jugada = arbol.root(), jugada_padre;
 	bintree<Pregunta> rama;
 
-
-	while (personajes[i_pj] != nombre && i_pj < personajes.size();) {
+	while (personajes[i_pj] != nombre && i_pj < personajes.size()) {
 		i_pj++;
 	}
 
@@ -517,10 +533,40 @@ void QuienEsQuien::elimina_personaje (string nombre) {
 	} else {
 		while ( (*jugada).es_pregunta() ) {
 			while (atributos[i_pregunta] != (*jugada).obtener_pregunta()) {
-				i_pregunta;
+				i_pregunta++;
 			}
 			jugada = tablero[i_pj][i_pregunta] ? jugada.left() : jugada.right();
 		}
 	}
-	prune
+
+	// Eliminamos el personaje
+	jugada_padre = jugada.parent();
+	if (jugada_padre.left() == jugada) {
+		arbol.prune_left(jugada_padre, rama);
+		arbol.prune_right(jugada_padre, rama);
+	} else {
+		arbol.prune_right(jugada_padre, rama);
+		arbol.prune_left(jugada_padre, rama);
+	}
+
+	// Reestructuramos el árbol
+	if (jugada_padre == arbol.root()) {
+		arbol = rama;
+	} else {
+		jugada = jugada_padre;
+		jugada_padre = jugada_padre.parent();
+		if (jugada_padre.left() == jugada) {
+			arbol.insert_left(jugada_padre, rama);
+		} else {
+			arbol.insert_right(jugada_padre, rama);
+		}
+	}
+
+	// Eliminamos al personaje del tablero y de los personajes
+	vector<string>::iterator it1 = personajes.begin();
+	vector<vector<bool> >::iterator it2 = tablero.begin();
+	advance(it1, i_pj);
+	advance(it2, i_pj);
+	personajes.erase(it1);
+	tablero.erase(it2);
 }

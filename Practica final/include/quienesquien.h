@@ -195,6 +195,10 @@ public:
 
 	void preguntas_formuladas (bintree<Pregunta>::node jugada);
 
+	void aniade_personaje (string nombre, vector<bool> caracteristicas);
+
+	void elimina_personaje (string nombre);
+
 };
 
 #endif
