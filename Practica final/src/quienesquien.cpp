@@ -5,6 +5,9 @@
 #include <math.h>
 #include <algorithm>
 
+#include <list> // Para eliminar_nodos_redundantes
+#include <vector>
+
 QuienEsQuien::QuienEsQuien(){
 	jugada_actual = arbol.root();
 }
@@ -208,12 +211,62 @@ vector<bool> convertir_a_vector_bool(int n, int digitos) {
   return ret;
 }
 
-bintree<Pregunta> QuienEsQuien::crear_arbol()
-{
+void QuienEsQuien::crear_arbol_recursivo(bintree<Pregunta> & arbol, int num_pregunta,
+			const vector<bool> & personajes_levantados) {
+	if (num_pregunta > atributos.size()) {
+		cerr << "Error al crear el arbol." << endl;
+		cerr << "Insuficientes atributos para el número de personajes dado." << endl;
+	}
+	vector<bool> personajes_si, personajes_no;
+	int num_pjs_levantados = 0, pos_pj_levantado = -1;
+	bool existe_pj_si = false, existe_pj_no = false;
+
+	for (int i=0; i<personajes.size(); i++) {
+		bool b1 = false, b2 = false;
+		if ( personajes_levantados[i] ) {
+			num_pjs_levantados++;
+			if ( tablero[i][num_pregunta] ) {
+				b1 = true;
+				existe_pj_si = true;
+			} else {
+				b2 = true;
+				existe_pj_no = true;
+			}
+			if (pos_pj_levantado == -1) {
+				pos_pj_levantado = i;
+			}
+		}
+		personajes_si.push_back(b1);
+		personajes_no.push_back(b2);
+	}
+
+	if (num_pjs_levantados > 1) {
+		Pregunta pregunta (atributos[num_pregunta], num_pjs_levantados);
+		bintree<Pregunta> arbol_aux(pregunta), arbol_izq, arbol_der;
+		arbol = arbol_aux;
+		if (existe_pj_si) {
+			crear_arbol_recursivo(arbol_izq, num_pregunta+1, personajes_si);
+			arbol.insert_left(arbol.root(), arbol_izq);
+		}
+		if (existe_pj_no) {
+			crear_arbol_recursivo(arbol_der, num_pregunta+1, personajes_no);
+			arbol.insert_right(arbol.root(), arbol_der);
+		}
+	} else {
+		Pregunta pregunta (personajes[pos_pj_levantado], 1);
+		bintree<Pregunta> arbol_aux(pregunta);
+		arbol = arbol_aux;
+	}
+}
+
+bintree<Pregunta> QuienEsQuien::crear_arbol() {
+	vector<bool> personajes_levantados;
+	for (int i=0; i<personajes.size(); i++) {
+		bool b = true;
+		personajes_levantados.push_back(b);
+	}
 	bintree<Pregunta> arbol;
-
-
-
+	crear_arbol_recursivo(arbol, 0, personajes_levantados);
 	return arbol;
 }
 
@@ -262,15 +315,125 @@ void QuienEsQuien::escribir_arbol_completo() const{
 	escribir_esquema_arbol(cout,this->arbol,this->arbol.root(),pre);
 }
 
+/*
+	COMENTAR ESTO
+*/
+
+
 void QuienEsQuien::eliminar_nodos_redundantes(){
-	// TODO ^^
+	bintree<Pregunta> rama;
+	bintree<Pregunta>::node nodo_en_estudio;
+	bintree<Pregunta>::preorder_iterator it;
+	bool izquierda_coja;
+
+	// Elminamos los nodos redundantes que cuelgan directamente de la raiz
+	izquierda_coja = arbol.root().left().null();
+	while (izquierda_coja || arbol.root().right().null()) {
+		if (izquierda_coja) {
+			arbol.prune_right(arbol.root(), arbol);
+		} else {
+			arbol.prune_left(arbol.root(), arbol);
+		}
+	}
+
+	vector<bintree<Pregunta>::node> hijos;
+	list<bintree<Pregunta>::node> lista;
+	lista.push_back(arbol.root());
+
+	while (!lista.empty()) {
+		nodo_en_estudio = lista.front();
+		lista.pop_front();
+		hijos.clear();
+		hijos.push_back(nodo_en_estudio.left());
+		hijos.push_back(nodo_en_estudio.right());
+		for (int i=0; i<2; i++) {
+			izquierda_coja = hijos[i].left().null();
+			while ( (*hijos[i]).obtener_num_personajes() > 1 &&
+					(izquierda_coja || hijos[i].right().null() ) ) {
+				if (izquierda_coja) {
+					arbol.prune_right(hijos[i], rama);
+				} else {
+					arbol.prune_left(hijos[i], rama);
+				}
+				if (i == 0) {
+					arbol.insert_left(nodo_en_estudio, rama);
+					hijos[0] = nodo_en_estudio.left();
+				} else {
+					arbol.insert_right(nodo_en_estudio, rama);
+					hijos[1] = nodo_en_estudio.right();
+				}
+				izquierda_coja = hijos[i].left().null();
+			}
+		}
+		if ( ( *(nodo_en_estudio.left()) ).obtener_num_personajes() > 1)
+			lista.push_back(nodo_en_estudio.left());
+		if ( ( *(nodo_en_estudio.right()) ).obtener_num_personajes() > 1)
+			lista.push_back(nodo_en_estudio.right());
+	}
+
+/*
+	// Recorremos el arbol a un nivel de distancia elminando los redundantes
+	// Todo nodo tocado por it o bien es una hoja o bien tiene dos hijos no nulos
+	for (it = arbol.begin_preorder(); it != arbol.end_preorder(); ++it) {
+		if ( (*it).obtener_num_personajes() > 1) {
+			// Left node
+			nodo_en_estudio = (it).left();
+			izquierda_coja = nodo_en_estudio.left().null();
+			while ( nodo_en_estudio.obtener_num_personajes() > 1 &&
+					(izquierda_coja || nodo_en_estudio.right().null() ) ) {
+				if (izquierda_coja) {
+					arbol.prune_right(nodo_en_estudio.right(), rama);
+				} else {
+					arbol.prune_left(nodo_en_estudio.left(), rama);
+				}
+				arbol.insert_left(nodo_en_estudio, rama);
+				izquierda_coja = nodo_en_estudio.left().null();
+			}
+			// Right node
+			nodo_en_estudio = (*it).right();
+			izquierda_coja = nodo_en_estudio.left().null();
+			while ( nodo_en_estudio.obtener_num_personajes() > 1 &&
+					(izquierda_coja || nodo_en_estudio.right().null() ) ) {
+				if (izquierda_coja) {
+					arbol.prune_right(nodo_en_estudio.right(), rama);
+				} else {
+					arbol.prune_left(nodo_en_estudio.left(), rama);
+				}
+				arbol.insert_right(nodo_en_estudio, rama);
+				izquierda_coja = nodo_en_estudio.left().null();
+			}
+		}
+	}
+*/
+
+}
+
+/**
+ * @brief Añade a suma_profundidades la suma de la profundidades de las hojas y
+	a hojas el número de hojas encontrado a partir de nodo.
+		profundidad es la profundidad de la hoja.
+
+		REPASAR ESTO
+**/
+
+void profundidad_promedio_recursivo(const bintree<Pregunta>::node & nodo,
+			int profundidad, int & num_hojas, int & suma_profundidades) {
+	if ( nodo.left().null() && nodo.right().null() ) {
+		suma_profundidades += profundidad;
+		num_hojas++;
+	} else {
+		profundidad++;
+		if ( !nodo.left().null() )
+			profundidad_promedio_recursivo(nodo.left(), profundidad, num_hojas, suma_profundidades);
+		if ( !nodo.right().null() )
+			profundidad_promedio_recursivo(nodo.right(), profundidad, num_hojas, suma_profundidades);
+	}
 }
 
 float QuienEsQuien::profundidad_promedio_hojas(){
-
-
-
-	return -1;
+	int num_hojas = 0, suma_profundidades = 0;
+	profundidad_promedio_recursivo(arbol.root(), 0, num_hojas, suma_profundidades);
+	return 1.0 * suma_profundidades / num_hojas;
 }
 
 /**
