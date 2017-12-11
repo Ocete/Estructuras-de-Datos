@@ -88,7 +88,7 @@ int main(int argc, char * argv[]){
 	cout << quienEsQuien.profundidad_promedio_hojas()<<endl;
 	cout << "======================================" << endl << endl << endl;
 
-	if(jugar){
+	if( jugar ){
 		quienEsQuien.iniciar_juego();
 	}
 	return 0;

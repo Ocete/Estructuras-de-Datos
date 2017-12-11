@@ -7,6 +7,7 @@
 
 #include <list> // Para eliminar_nodos_redundantes
 #include <vector>
+#include <stack>
 
 QuienEsQuien::QuienEsQuien(){
 	jugada_actual = arbol.root();
@@ -272,11 +273,31 @@ bintree<Pregunta> QuienEsQuien::crear_arbol() {
 
 void QuienEsQuien::usar_arbol(bintree<Pregunta> arbol_nuevo){
 	arbol = arbol_nuevo;
-	jugada_actual = arbol.root();
 }
 
 void QuienEsQuien::iniciar_juego(){
-		//TODO :)
+	jugada_actual = arbol.root();
+	char c;
+	string str;
+	while ( (*jugada_actual).es_pregunta() ) {
+		do {
+			cout << "\t¿Es " << (*jugada_actual).obtener_pregunta() << "? (s/n/p)" << endl << "\t";
+			cin >> c;
+		} while (c != 's' && c != 'n' && c != 'p');
+		if (c == 's') {
+			str = "si";
+			jugada_actual = jugada_actual.left();
+		} else if (c == 'n') {
+			str = "no";
+			jugada_actual = jugada_actual.right();
+		} else {
+			str = "mostrar preguntas formuladas";
+			preguntas_formuladas(jugada_actual);
+		}
+		cout << "\tHa contestado: " << str << endl;
+	}
+	cout << "\n\tTu personaje es " << (*jugada_actual).obtener_personaje() << endl;
+	cout << "\n\tFIN DEL JUEGO" << endl;
 }
 
 set<string> QuienEsQuien::informacion_jugada(bintree<Pregunta>::node jugada_actual){
@@ -318,7 +339,6 @@ void QuienEsQuien::escribir_arbol_completo() const{
 /*
 	COMENTAR ESTO
 */
-
 
 void QuienEsQuien::eliminar_nodos_redundantes(){
 	bintree<Pregunta> rama;
@@ -370,42 +390,6 @@ void QuienEsQuien::eliminar_nodos_redundantes(){
 		if ( ( *(nodo_en_estudio.right()) ).obtener_num_personajes() > 1)
 			lista.push_back(nodo_en_estudio.right());
 	}
-
-/*
-	// Recorremos el arbol a un nivel de distancia elminando los redundantes
-	// Todo nodo tocado por it o bien es una hoja o bien tiene dos hijos no nulos
-	for (it = arbol.begin_preorder(); it != arbol.end_preorder(); ++it) {
-		if ( (*it).obtener_num_personajes() > 1) {
-			// Left node
-			nodo_en_estudio = (it).left();
-			izquierda_coja = nodo_en_estudio.left().null();
-			while ( nodo_en_estudio.obtener_num_personajes() > 1 &&
-					(izquierda_coja || nodo_en_estudio.right().null() ) ) {
-				if (izquierda_coja) {
-					arbol.prune_right(nodo_en_estudio.right(), rama);
-				} else {
-					arbol.prune_left(nodo_en_estudio.left(), rama);
-				}
-				arbol.insert_left(nodo_en_estudio, rama);
-				izquierda_coja = nodo_en_estudio.left().null();
-			}
-			// Right node
-			nodo_en_estudio = (*it).right();
-			izquierda_coja = nodo_en_estudio.left().null();
-			while ( nodo_en_estudio.obtener_num_personajes() > 1 &&
-					(izquierda_coja || nodo_en_estudio.right().null() ) ) {
-				if (izquierda_coja) {
-					arbol.prune_right(nodo_en_estudio.right(), rama);
-				} else {
-					arbol.prune_left(nodo_en_estudio.left(), rama);
-				}
-				arbol.insert_right(nodo_en_estudio, rama);
-				izquierda_coja = nodo_en_estudio.left().null();
-			}
-		}
-	}
-*/
-
 }
 
 /**
@@ -482,4 +466,61 @@ void QuienEsQuien::tablero_aleatorio(int numero_de_personajes){
 		personajes.erase(personajes.begin()+personaje_a_eliminar);
 		tablero.erase(tablero.begin()+personaje_a_eliminar);
 	}
+}
+
+//////////////////////////////////
+//				METODOS EXTRA         //
+//////////////////////////////////
+
+// Prec jugada != null
+
+void QuienEsQuien::preguntas_formuladas (bintree<Pregunta>::node jugada) {
+	bintree<Pregunta>::node aux = jugada;
+	string str;
+	stack<string> pila;
+
+	cout << "\nEl personaje oculto tiene las siguientes características:" << endl;
+	while (!aux.parent().null()) {
+		str = ( *aux.parent() ).obtener_pregunta() + " - " ;
+		str += aux == aux.parent().left() ? "Si" : "No";
+		pila.push(str);
+		aux = aux.parent();
+	}
+	while (!pila.empty()) {
+		str = pila.top();
+		pila.pop();
+		cout << str << endl;
+	}
+	if ( (*jugada).es_personaje() ) {
+		cout << "El personaje es " << (*jugada).obtener_personaje() << endl;
+	} else {
+		cout << "Aún no sé cuál es el personaje\n" << endl;
+	}
+}
+
+void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas) {
+
+}
+
+void QuienEsQuien::elimina_personaje (string nombre) {
+	int i_pj = 0, i_pregunta = 0;
+	bintree<Pregunta>::node jugada = arbol.root();
+	bintree<Pregunta> rama;
+
+
+	while (personajes[i_pj] != nombre && i_pj < personajes.size();) {
+		i_pj++;
+	}
+
+	if (i_pj == personajes.size()) {
+		cerr << "No hay ningún personaje con dicho nombre" << endl;
+	} else {
+		while ( (*jugada).es_pregunta() ) {
+			while (atributos[i_pregunta] != (*jugada).obtener_pregunta()) {
+				i_pregunta;
+			}
+			jugada = tablero[i_pj][i_pregunta] ? jugada.left() : jugada.right();
+		}
+	}
+	prune
 }

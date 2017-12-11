@@ -191,6 +191,10 @@ public:
 	  * @param numero_de_personajes N�mero de personajes que tiene el tablero a crear.
 	  */
 	void tablero_aleatorio(int numero_de_personajes);
+
+
+	void preguntas_formuladas (bintree<Pregunta>::node jugada);
+
 };
 
 #endif
