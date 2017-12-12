@@ -117,5 +117,32 @@ int main(int argc, char * argv[]){
 	cout << "========================================================" << endl << endl << endl;
 
 	quienEsQuien.mostrar_estructuras_leidas();
+
+	cout << "Añadamos a Pilar al arbol" << endl;
+	bool atributos_de_pilar[7] = {1,0,1,0,1,0,0};
+	vector<bool> v_atr;
+	for (int i=0; i<7; i++) v_atr.push_back(atributos_de_pilar[i]);
+	quienEsQuien.aniade_personaje("Pilar", v_atr);
+
+	cout << "\n========== Arbol después de añadir a Pilar ==========="<<endl;
+	quienEsQuien.escribir_arbol_completo();
+	cout << "Profundidad promedio de las hojas del arbol: ";
+	cout << quienEsQuien.profundidad_promedio_hojas()<<endl;
+	cout << "========================================================" << endl << endl << endl;
+
+	cout << "Añadamos a Pablo al arbol" << endl;
+	bool atributos_de_pablo[7] = {0,1,1,0,0,1,0};
+	v_atr.clear();
+	for (int i=0; i<7; i++) v_atr.push_back(atributos_de_pablo[i]);
+	quienEsQuien.aniade_personaje("Pablo", v_atr);
+
+	cout << "\n========== Arbol después de añadir a Pablo ==========="<<endl;
+	quienEsQuien.escribir_arbol_completo();
+	cout << "Profundidad promedio de las hojas del arbol: ";
+	cout << quienEsQuien.profundidad_promedio_hojas()<<endl;
+	cout << "========================================================" << endl << endl << endl;
+
+	quienEsQuien.mostrar_estructuras_leidas();
+
 	return 0;
 }

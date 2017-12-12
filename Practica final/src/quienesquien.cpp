@@ -501,21 +501,56 @@ void QuienEsQuien::preguntas_formuladas (bintree<Pregunta>::node jugada) {
 //Prec.: Al menos dos personajes en el arbol
 void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas) {
 	int i_pregunta = 0;
-	bintree<Pregunta>::node jugada = arbol.root();
+	bintree<Pregunta>::node jugada = arbol.root(), jugada_padre;
 
 	personajes.push_back(nombre);
 	tablero.push_back(caracteristicas);
 
+	// Buscamos la jugada en la que el arbol se expande
+	// FALTA AQUI COMPROBAR QUE HALLA SUFICIENTES ATRIBUTOS PARA EL NUMERO DE PJS
 	while ( (*jugada).es_pregunta() &&
 				(*jugada).obtener_pregunta() == atributos[i_pregunta]) {
 		jugada = caracteristicas[i_pregunta] ? jugada.left() : jugada.right();
+		i_pregunta++;
 	}
 
+	// Actualizamos el nodo de la jugada y su subarbol.
 	if (jugada == arbol.root()) {
-
-	} else {
-
+		Pregunta pregunta (atributos[0], personajes.size()), pregunta_pj(nombre, 1);
+		bintree<Pregunta> nuevo_arbol_raiz(pregunta), rama_pj(pregunta_pj), antigua_raiz;
+		antigua_raiz = arbol;
+		arbol = nuevo_arbol_raiz;
+		if (caracteristicas[0]) {
+			arbol.insert_right(arbol.root(), antigua_raiz);
+			arbol.insert_left(arbol.root(), rama_pj);
+		} else {
+			arbol.insert_right(arbol.root(), rama_pj);
+			arbol.insert_left(arbol.root(), antigua_raiz);
+		}
+	} else { //AQUI DA CORE
+		jugada_padre = jugada.parent();
+		Pregunta pregunta ( atributos[i_pregunta],
+			(*jugada).obtener_num_personajes()+1 ), pregunta_pj(nombre, 1);
+		bintree<Pregunta> nuevo_arbol_jugada(pregunta), rama_pj(pregunta_pj), rama_podada;
+		if (jugada_padre.left() == jugada) {
+			arbol.prune_left(jugada_padre, rama_podada);
+			jugada = jugada_padre.left();
+		} else {
+			arbol.prune_right(jugada_padre, rama_podada);
+			jugada = jugada_padre.right();
+		}
+		if (caracteristicas[i_pregunta]) {
+			arbol.insert_right(jugada, rama_podada);
+			arbol.insert_left(jugada, rama_pj);
+		} else {
+			arbol.insert_right(jugada, rama_pj);
+			arbol.insert_left(jugada, rama_podada);
+		}
 	}
+
+	// Actualizamos las conexiones del nuevo nodo
+	if (true);
+
 }
 
 //Prec.: Al menos dos personajes en el arbol
