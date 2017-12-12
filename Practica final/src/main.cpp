@@ -124,7 +124,7 @@ int main(int argc, char * argv[]){
 	for (int i=0; i<7; i++) v_atr.push_back(atributos_de_pilar[i]);
 	quienEsQuien.aniade_personaje("Pilar", v_atr);
 
-	cout << "\n========== Arbol después de añadir a Pilar ==========="<<endl;
+	cout << "\n========== Arbol después de añadir a Pilar ============"<<endl;
 	quienEsQuien.escribir_arbol_completo();
 	cout << "Profundidad promedio de las hojas del arbol: ";
 	cout << quienEsQuien.profundidad_promedio_hojas()<<endl;
@@ -136,7 +136,7 @@ int main(int argc, char * argv[]){
 	for (int i=0; i<7; i++) v_atr.push_back(atributos_de_pablo[i]);
 	quienEsQuien.aniade_personaje("Pablo", v_atr);
 
-	cout << "\n========== Arbol después de añadir a Pablo ==========="<<endl;
+	cout << "\n========== Arbol después de añadir a Pablo ============"<<endl;
 	quienEsQuien.escribir_arbol_completo();
 	cout << "Profundidad promedio de las hojas del arbol: ";
 	cout << quienEsQuien.profundidad_promedio_hojas()<<endl;
