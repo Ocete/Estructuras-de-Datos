@@ -131,7 +131,7 @@ int main(int argc, char * argv[]){
 	cout << "========================================================" << endl << endl << endl;
 
 	cout << "Añadamos a Pablo al arbol" << endl;
-	bool atributos_de_pablo[7] = {0,1,1,0,0,1,0};
+	bool atributos_de_pablo[7] = {0,1,1,0,1,0,0};
 	v_atr.clear();
 	for (int i=0; i<7; i++) v_atr.push_back(atributos_de_pablo[i]);
 	quienEsQuien.aniade_personaje("Pablo", v_atr);

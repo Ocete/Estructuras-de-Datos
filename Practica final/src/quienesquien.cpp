@@ -13,14 +13,15 @@ QuienEsQuien::QuienEsQuien(){
 	jugada_actual = arbol.root();
 }
 
+// No actualiza la jugada actual
 QuienEsQuien::QuienEsQuien(const QuienEsQuien &quienEsQuien){
 	personajes = quienEsQuien.personajes;
 	atributos = quienEsQuien.atributos;
 	tablero = quienEsQuien.tablero;
 	arbol = quienEsQuien.arbol;
-	// jugada_actual = quienEsQuien.jugada_actual; Esto hay que hacerlo bien
 }
 
+// No actualiza la jugada actual
 QuienEsQuien& QuienEsQuien::operator= (const QuienEsQuien &quienEsQuien){
 	if (&quienEsQuien != this) {
 		this->limpiar();
@@ -28,7 +29,6 @@ QuienEsQuien& QuienEsQuien::operator= (const QuienEsQuien &quienEsQuien){
 		atributos = quienEsQuien.atributos;
 		tablero = quienEsQuien.tablero;
 		arbol = quienEsQuien.arbol;
-		// jugada_actual = quienEsQuien.jugada_actual; Esto hay que hacerlo bien
 	}
 	return *this;
 }
@@ -503,17 +503,45 @@ void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas
 	if (caracteristicas.size() == tablero[0].size() && log(1.0*personajes.size()+1) <= caracteristicas.size()) {
 		int i_pregunta = 0;
 		bintree<Pregunta>::node jugada = arbol.root(), jugada_padre;
+		vector<bool> aun_levantados;
+		bool pregunta_a_abrir_alcanzada = false;
 
+		for (int i=0; i<personajes.size(); i++)
+			aun_levantados.push_back(true);
 		personajes.push_back(nombre);
 		tablero.push_back(caracteristicas);
 
 		// Buscamos la jugada en la que el arbol se expande
-		// FALTA AQUI COMPROBAR QUE HALLA SUFICIENTES ATRIBUTOS PARA EL NUMERO DE PJS
-		while ( (*jugada).es_pregunta() &&
-					(*jugada).obtener_pregunta() == atributos[i_pregunta]) {
-			jugada = caracteristicas[i_pregunta] ? jugada.left() : jugada.right();
-			i_pregunta++;
-		}
+		do {
+			if ( (*jugada).es_personaje() ) {
+				cout << "AAAAAHA " << nombre << endl;
+
+				pregunta_a_abrir_alcanzada = true;
+			} else {
+				// Si la jugada no es la que deberia ser, comprobamos si tenemos o no que dividir aqui
+				// Por ejemplo, son todos hombres pero hemos introducido un hombre
+
+				if ( !pregunta_a_abrir_alcanzada &&
+							(*jugada).obtener_pregunta() != atributos[i_pregunta] ) {
+					int i = 0;
+					while (!aun_levantados[i]) {
+						i++;
+					}
+					if (tablero[i][i_pregunta] != caracteristicas[i_pregunta])
+						pregunta_a_abrir_alcanzada = true;
+				}
+
+				// Este no es el nodo a abrir, buscamos el siguiente
+				if (!pregunta_a_abrir_alcanzada) {
+					jugada = caracteristicas[i_pregunta] ? jugada.left() : jugada.right();
+					i_pregunta++;
+					// Actualizamos los personajes levantados
+					for (int i=0; i<aun_levantados.size(); i++)
+						if (tablero[i][i_pregunta] != caracteristicas[i_pregunta])
+							aun_levantados[i] = false;
+				}
+			}
+		} while ( !pregunta_a_abrir_alcanzada );
 
 		// Actualizamos el nodo de la jugada
 		Pregunta pregunta ( atributos[i_pregunta],
@@ -530,11 +558,13 @@ void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas
 				arbol.insert_left(jugada_padre, nuevo_arbol_jugada);
 				jugada = jugada_padre.left();
 			} else {
+				cout << "AAAAAHA " << nombre << endl;
 				arbol.prune_right(jugada_padre, rama_podada);
 				arbol.insert_right(jugada_padre, nuevo_arbol_jugada);
 				jugada = jugada_padre.right();
 			}
 		}
+
 
 		// Actualizamos el subarbol que cuelga del nodo jugada
 		if (caracteristicas[i_pregunta]) {
