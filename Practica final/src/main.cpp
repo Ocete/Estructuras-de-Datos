@@ -144,5 +144,19 @@ int main(int argc, char * argv[]){
 
 	quienEsQuien.mostrar_estructuras_leidas();
 
+	cout << "\n\nCreemos el árbol de nuevo utilizando entropía.\n\n" << endl;/*
+	quienEsQuien.elimina_personaje("Pablo");
+	quienEsQuien.elimina_personaje("Pilar");
+	quienEsQuien.elimina_personaje("Ernesto");
+	quienEsQuien.escribir_arbol_completo();*/
+
+	quienEsQuien.usar_arbol(quienEsQuien.crear_arbol_con_entropia());
+
+	cout << "\n============== Arbol creado con entropía ==============="<<endl;
+	quienEsQuien.escribir_arbol_completo();
+	cout << "Profundidad promedio de las hojas del arbol: ";
+	cout << quienEsQuien.profundidad_promedio_hojas()<<endl;
+	cout << "========================================================" << endl << endl << endl;
+
 	return 0;
 }

@@ -66,6 +66,10 @@ private:
 */
 	void crear_arbol_recursivo(bintree<Pregunta> & arbol, int num_pregunta,
 				const vector<bool> & personajes_levantados);
+
+	bintree<Pregunta> crear_arbol_con_entropia_recursivo(bintree<Pregunta> & arbol,
+			const vector<bool> & personajes_levantados, vector<bool> preguntas_usadas);
+
 public:
 	/**
 	  * @brief Constructor b�sico de la clase
@@ -198,6 +202,8 @@ public:
 	void aniade_personaje (string nombre, vector<bool> caracteristicas);
 
 	void elimina_personaje (string nombre);
+
+	bintree<Pregunta> crear_arbol_con_entropia();
 
 };
 

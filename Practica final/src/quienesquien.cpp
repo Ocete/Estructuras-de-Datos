@@ -171,7 +171,7 @@ ostream& operator << (ostream& os, const QuienEsQuien &quienEsQuien){
 
 	//Rellenamos con ceros y unos cada l�nea y al final ponemos el nombre del personaje.
 	for(int indice_personaje=0;indice_personaje<quienEsQuien.personajes.size();indice_personaje++){
-		for(int indice_atributo=0;indice_atributo<quienEsQuien.personajes.size();indice_atributo++){
+		for(int indice_atributo=0;indice_atributo<quienEsQuien.atributos.size();indice_atributo++){
 
 			os  << quienEsQuien.tablero[indice_personaje][indice_atributo] << "\t";
 		}
@@ -500,7 +500,8 @@ void QuienEsQuien::preguntas_formuladas (bintree<Pregunta>::node jugada) {
 
 //Prec.: Al menos dos personajes en el arbol
 void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas) {
-	if (caracteristicas.size() == tablero[0].size() && log(1.0*personajes.size()+1) <= caracteristicas.size()) {
+	if (caracteristicas.size() == tablero[0].size() &&
+				log(1.0*personajes.size()+1) <= caracteristicas.size()) {
 		int i_pregunta = 0;
 		bintree<Pregunta>::node jugada = arbol.root(), jugada_padre;
 		vector<bool> aun_levantados;
@@ -511,24 +512,24 @@ void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas
 		personajes.push_back(nombre);
 		tablero.push_back(caracteristicas);
 
-		// Buscamos la jugada en la que el arbol se expande
+		// Buscamos el nodo en el que el arbol se expande
 		do {
 			if ( (*jugada).es_personaje() ) {
-				cout << "AAAAAHA " << nombre << endl;
-
 				pregunta_a_abrir_alcanzada = true;
 			} else {
 				// Si la jugada no es la que deberia ser, comprobamos si tenemos o no que dividir aqui
 				// Por ejemplo, son todos hombres pero hemos introducido un hombre
 
-				if ( !pregunta_a_abrir_alcanzada &&
-							(*jugada).obtener_pregunta() != atributos[i_pregunta] ) {
+				while ( !pregunta_a_abrir_alcanzada &&
+						(*jugada).obtener_pregunta() != atributos[i_pregunta] ) {
 					int i = 0;
 					while (!aun_levantados[i]) {
 						i++;
 					}
 					if (tablero[i][i_pregunta] != caracteristicas[i_pregunta])
 						pregunta_a_abrir_alcanzada = true;
+					else
+						i_pregunta++;
 				}
 
 				// Este no es el nodo a abrir, buscamos el siguiente
@@ -542,6 +543,15 @@ void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas
 				}
 			}
 		} while ( !pregunta_a_abrir_alcanzada );
+
+		// Actualizamos el i_pregunta hasta encontrar la pregunta a realizar.
+		int i_levantado = 0;
+		while (!aun_levantados[i_levantado]) {
+			i_levantado++;
+		}
+		while (tablero[i_levantado][i_pregunta] == caracteristicas[i_pregunta]) {
+			i_pregunta++;
+		}
 
 		// Actualizamos el nodo de la jugada
 		Pregunta pregunta ( atributos[i_pregunta],
@@ -558,25 +568,44 @@ void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas
 				arbol.insert_left(jugada_padre, nuevo_arbol_jugada);
 				jugada = jugada_padre.left();
 			} else {
-				cout << "AAAAAHA " << nombre << endl;
 				arbol.prune_right(jugada_padre, rama_podada);
 				arbol.insert_right(jugada_padre, nuevo_arbol_jugada);
 				jugada = jugada_padre.right();
 			}
 		}
 
-
 		// Actualizamos el subarbol que cuelga del nodo jugada
 		if (caracteristicas[i_pregunta]) {
-			arbol.insert_right(arbol.root(), rama_podada);
-			arbol.insert_left(arbol.root(), rama_pj);
+			arbol.insert_right(jugada, rama_podada);
+			arbol.insert_left(jugada, rama_pj);
 		} else {
-			arbol.insert_right(arbol.root(), rama_pj);
-			arbol.insert_left(arbol.root(), rama_podada);
+			arbol.insert_right(jugada, rama_pj);
+			arbol.insert_left(jugada, rama_podada);
 		}
 
-		// Actualizamos las conexiones del nuevo nodo
-		if (true);
+		// Actualizamos el número de jugadores levantados en los nodos superiores ($$$)
+		while ( !jugada.parent().null() ) {
+			jugada = jugada.parent();
+			Pregunta pregunta_actualizada( (*jugada).obtener_pregunta(),
+				(*jugada).obtener_num_personajes()+1);
+			bintree<Pregunta> arbol_actualizado(pregunta_actualizada);
+			arbol.prune_left(jugada, rama_podada);
+			arbol_actualizado.insert_left(arbol_actualizado.root(), rama_podada);
+			arbol.prune_right(jugada, rama_podada);
+			arbol_actualizado.insert_right(arbol_actualizado.root(), rama_podada);
+			if ( jugada.parent().null() ) {
+				arbol = arbol_actualizado;
+			} else {
+				jugada_padre = jugada.parent();
+				if (jugada_padre.left() == jugada) {
+					arbol.insert_left(jugada_padre, arbol_actualizado);
+					jugada = jugada_padre.left();
+				} else {
+					arbol.insert_right(jugada_padre, arbol_actualizado);
+					jugada = jugada_padre.right();
+				}
+			}
+		}
 
 
 	} else {
@@ -637,4 +666,100 @@ void QuienEsQuien::elimina_personaje (string nombre) {
 	advance(it2, i_pj);
 	personajes.erase(it1);
 	tablero.erase(it2);
+}
+
+bintree<Pregunta> QuienEsQuien::crear_arbol_con_entropia_recursivo(bintree<Pregunta> & arbol,
+		const vector<bool> & personajes_levantados, vector<bool> preguntas_usadas) {
+			cout << "hey in" << endl;
+	int pjs_si, pjs_no, num_pjs_levantados = 0, i_min_entropia = -1, pos_pj_levantado = -1;
+	double entr, pb_si, pb_no, min_entropia = numeric_limits<double>::max() ;
+
+
+	// Calculamos el número de pjs levantados
+	for (int i=0; i<personajes.size(); i++) {
+		if (personajes_levantados[i]) {
+			num_pjs_levantados++;
+			if ( pos_pj_levantado == -1 ) {
+				pos_pj_levantado = i;
+			}
+		}
+	}
+
+	// Si solo hay un personaje, hemos terminado
+	if (num_pjs_levantados == 1) {
+		cout << "hey3  " <<  pos_pj_levantado << endl;
+
+		Pregunta pregunta (personajes[pos_pj_levantado], 1);
+		bintree<Pregunta> arbol_aux(pregunta);
+		arbol = arbol_aux;
+		cout << "hey4  " <<  pos_pj_levantado << endl;
+	} else {
+		// Calculamos la pregunta con mínima entropía
+		for (int i=0; i<atributos.size(); i++) {
+			if ( !preguntas_usadas[i] ) {
+				pjs_si = pjs_no = 0;
+
+				for (int j=0; j<personajes.size(); j++) {
+					if (personajes_levantados[j]) {
+						if (tablero[j][i])
+							pjs_si++;
+						else
+							pjs_no++;
+					}
+				}
+
+				pb_si = 1.0*pjs_si / num_pjs_levantados;
+				pb_no = 1.0*pjs_no / num_pjs_levantados;
+				entr = -( pb_si*log2(pb_si) + pb_no*log2(pb_no) );
+
+				if ( entr < min_entropia ) {
+					min_entropia = entr;
+					i_min_entropia = i;
+				}
+			}
+		}
+
+		cout << "hey0  " <<  i_min_entropia << endl;
+		// Una vez seleccionada la pregunta distinguimos qué personajes van por qué rama
+		vector<bool> personajes_si, personajes_no;
+
+		for (int i=0; i<personajes.size(); i++) {
+			bool b1 = false, b2 = false;
+			if ( personajes_levantados[i] ) {
+				if ( tablero[i][i_min_entropia] ) {
+					b1 = true;
+				} else {
+					b2 = true;
+				}
+				if (pos_pj_levantado == -1) {
+					pos_pj_levantado = i;
+				}
+			}
+			personajes_si.push_back(b1);
+			personajes_no.push_back(b2);
+		}
+
+		// Creamos el árbol
+		preguntas_usadas[i_min_entropia] = true;
+		Pregunta pregunta (atributos[i_min_entropia], num_pjs_levantados);
+		bintree<Pregunta> arbol_aux(pregunta), arbol_izq, arbol_der;
+		arbol = arbol_aux;
+		crear_arbol_con_entropia_recursivo(arbol_izq, personajes_si, preguntas_usadas);
+		cout << "hey1" << endl;
+		arbol.insert_left(arbol.root(), arbol_izq);
+		crear_arbol_con_entropia_recursivo(arbol_der, personajes_no, preguntas_usadas);
+		arbol.insert_right(arbol.root(), arbol_der);
+	}
+	cout << "hey2" << endl;
+}
+
+bintree<Pregunta> QuienEsQuien::crear_arbol_con_entropia() {
+	vector<bool> personajes_levantados, preguntas_usadas;
+	for (int i=0; i<personajes.size(); i++) {
+		personajes_levantados.push_back(true);
+		preguntas_usadas.push_back(false);
+	}
+	bintree<Pregunta> arbol;
+	crear_arbol_con_entropia_recursivo(arbol, personajes_levantados, preguntas_usadas);
+	return arbol;
 }
