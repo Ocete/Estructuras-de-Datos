@@ -668,11 +668,10 @@ void QuienEsQuien::elimina_personaje (string nombre) {
 	tablero.erase(it2);
 }
 
-bintree<Pregunta> QuienEsQuien::crear_arbol_con_entropia_recursivo(bintree<Pregunta> & arbol,
+void QuienEsQuien::crear_arbol_con_entropia_recursivo(bintree<Pregunta> & arbol,
 		const vector<bool> & personajes_levantados, vector<bool> preguntas_usadas) {
-			cout << "hey in" << endl;
-	int pjs_si, pjs_no, num_pjs_levantados = 0, i_min_entropia = -1, pos_pj_levantado = -1;
-	double entr, pb_si, pb_no, min_entropia = numeric_limits<double>::max() ;
+	int pjs_si, pjs_no, num_pjs_levantados = 0, i_max_entropia = -1, pos_pj_levantado = -1;
+	double entr, pb_si, pb_no, max_entropia = numeric_limits<double>::min() ;
 
 
 	// Calculamos el número de pjs levantados
@@ -687,17 +686,15 @@ bintree<Pregunta> QuienEsQuien::crear_arbol_con_entropia_recursivo(bintree<Pregu
 
 	// Si solo hay un personaje, hemos terminado
 	if (num_pjs_levantados == 1) {
-		cout << "hey3  " <<  pos_pj_levantado << endl;
-
 		Pregunta pregunta (personajes[pos_pj_levantado], 1);
 		bintree<Pregunta> arbol_aux(pregunta);
 		arbol = arbol_aux;
-		cout << "hey4  " <<  pos_pj_levantado << endl;
 	} else {
 		// Calculamos la pregunta con mínima entropía
 		for (int i=0; i<atributos.size(); i++) {
 			if ( !preguntas_usadas[i] ) {
-				pjs_si = pjs_no = 0;
+				pjs_si = 0;
+				pjs_no = 0;
 
 				for (int j=0; j<personajes.size(); j++) {
 					if (personajes_levantados[j]) {
@@ -712,27 +709,23 @@ bintree<Pregunta> QuienEsQuien::crear_arbol_con_entropia_recursivo(bintree<Pregu
 				pb_no = 1.0*pjs_no / num_pjs_levantados;
 				entr = -( pb_si*log2(pb_si) + pb_no*log2(pb_no) );
 
-				if ( entr < min_entropia ) {
-					min_entropia = entr;
-					i_min_entropia = i;
+				if ( entr > max_entropia ) {
+					max_entropia = entr;
+					i_max_entropia = i;
 				}
 			}
 		}
 
-		cout << "hey0  " <<  i_min_entropia << endl;
 		// Una vez seleccionada la pregunta distinguimos qué personajes van por qué rama
 		vector<bool> personajes_si, personajes_no;
 
 		for (int i=0; i<personajes.size(); i++) {
 			bool b1 = false, b2 = false;
 			if ( personajes_levantados[i] ) {
-				if ( tablero[i][i_min_entropia] ) {
+				if ( tablero[i][i_max_entropia] ) {
 					b1 = true;
 				} else {
 					b2 = true;
-				}
-				if (pos_pj_levantado == -1) {
-					pos_pj_levantado = i;
 				}
 			}
 			personajes_si.push_back(b1);
@@ -740,23 +733,23 @@ bintree<Pregunta> QuienEsQuien::crear_arbol_con_entropia_recursivo(bintree<Pregu
 		}
 
 		// Creamos el árbol
-		preguntas_usadas[i_min_entropia] = true;
-		Pregunta pregunta (atributos[i_min_entropia], num_pjs_levantados);
+		preguntas_usadas[i_max_entropia] = true;
+		Pregunta pregunta (atributos[i_max_entropia], num_pjs_levantados);
 		bintree<Pregunta> arbol_aux(pregunta), arbol_izq, arbol_der;
 		arbol = arbol_aux;
 		crear_arbol_con_entropia_recursivo(arbol_izq, personajes_si, preguntas_usadas);
-		cout << "hey1" << endl;
 		arbol.insert_left(arbol.root(), arbol_izq);
 		crear_arbol_con_entropia_recursivo(arbol_der, personajes_no, preguntas_usadas);
 		arbol.insert_right(arbol.root(), arbol_der);
 	}
-	cout << "hey2" << endl;
 }
 
 bintree<Pregunta> QuienEsQuien::crear_arbol_con_entropia() {
 	vector<bool> personajes_levantados, preguntas_usadas;
 	for (int i=0; i<personajes.size(); i++) {
 		personajes_levantados.push_back(true);
+	}
+	for (int i=0; i<atributos.size(); i++) {
 		preguntas_usadas.push_back(false);
 	}
 	bintree<Pregunta> arbol;

@@ -61,14 +61,23 @@ private:
 	  */
 	bintree<Pregunta>::node jugada_actual;
 
-/**
-	COMENTAR ESTO
-*/
+	/**
+		* @brief Método auxiliar para crear el arbol de forma recursiva
+		* @param arbol Árbol donde devolveremos lo creado.
+		* @param arbol num_pregunta Número de pregunta a realizar.
+		* @param arbol personajes_levantados Personajes que quedan levantados.
+		*/
 	void crear_arbol_recursivo(bintree<Pregunta> & arbol, int num_pregunta,
 				const vector<bool> & personajes_levantados);
 
-	bintree<Pregunta> crear_arbol_con_entropia_recursivo(bintree<Pregunta> & arbol,
-			const vector<bool> & personajes_levantados, vector<bool> preguntas_usadas);
+	/**
+		* @brief Método auxiliar para crear el arbol de forma recursiva
+		* @param arbol Árbol donde devolveremos lo creado.
+		* @param arbol personajes_levantados Personajes que quedan levantados.
+		* @param arbol preguntas_usadas Preguntas ya realizadas.
+		*/
+	void crear_arbol_con_entropia_recursivo(bintree<Pregunta> & arbol,
+			const vector<bool> & personajes_levantados, vector<bool>  preguntas_usadas);
 
 public:
 	/**
@@ -196,13 +205,35 @@ public:
 	  */
 	void tablero_aleatorio(int numero_de_personajes);
 
-
+	/**
+		* @brief Muestras las preguntas ya formuladas para el nodo indicado.
+		* @param jugada Nodo del cual obtendremos las preguntas formuladas.
+		* @pre jugada != NULL.
+		*/
 	void preguntas_formuladas (bintree<Pregunta>::node jugada);
 
+	/**
+		* @brief Añade un personaje del árbol ya creado.
+		* @param nombre Nombre del personaje a añadir.
+		* @param caracteristicas Atributos del personaje a añadir.
+		* @pre Árbol ya creado con al menos dos personajes.
+		*/
 	void aniade_personaje (string nombre, vector<bool> caracteristicas);
 
+	/**
+		* @brief Elimina un personaje del árbol ya creado.
+		* @param nombre Nombre del personaje a eliminar.
+		* @pre Árbol ya creado con al menos dos personajes.
+		*/
 	void elimina_personaje (string nombre);
 
+	/**
+		* @brief Crea un árbol utilizado árboles de decisión y entropía.
+		* 	Como la entropía es una medida de cuan discrminatorio es un
+		*		parámetro respecto a una población, la maximizaremos en cada
+		*		nodo (y para cada atributo) buscándo el árbol óptimo. Para
+		*		ver el uso de este método ejecutar make jugarTableroGigante.
+		*/
 	bintree<Pregunta> crear_arbol_con_entropia();
 
 };

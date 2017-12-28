@@ -1,7 +1,7 @@
 //-*-Mode: C++;-*-
 
 /*
-  $Id: node.template,v 1.2 2006/05/18 10:22:10 jmbs Exp $  
+  $Id: node.template,v 1.2 2006/05/18 10:22:10 jmbs Exp $
 */
 /*
   $Log: node.template,v $
@@ -35,12 +35,12 @@ bintree<T>::nodewrapper::nodewrapper(const T & e)
 }
 
 
-// 
+//
 // Operaciones de node
 //
 
 template <typename T>
-inline 
+inline
 bintree<T>::node::node()
 {
   elnodo = 0;
@@ -64,7 +64,7 @@ bintree<T>::node::node(const typename bintree<T>::node & n)
 
 /*
 template <typename T>
-inline 
+inline
 bintree<T>::node::node(typename bintree<T>::node *n)
 {
   if (n != 0)
@@ -76,7 +76,7 @@ bintree<T>::node::node(typename bintree<T>::node *n)
 
 template <typename T>
 inline
-typename bintree<T>::node & 
+typename bintree<T>::node &
 bintree<T>::node::operator=(const typename bintree<T>::node & n)
 {
   if (&n != this){
@@ -125,14 +125,14 @@ typename bintree<T>::node bintree<T>::node::parent() const
 };
 
 template <typename T>
-inline 
+inline
 typename bintree<T>::node bintree<T>::node::left() const
 {
   return (elnodo->izda);
 };
 
 template <typename T>
-inline 
+inline
 typename bintree<T>::node bintree<T>::node::right() const
 {
   return (elnodo->dcha);
@@ -160,7 +160,7 @@ void bintree<T>::node::remove()
 };
 
 template <typename T>
-inline 
+inline
 bool bintree<T>::node::operator==(const node & n) const
 {
   return elnodo == n.elnodo;
@@ -172,4 +172,3 @@ bool bintree<T>::node::operator!=(const node & n) const
 {
   return elnodo != n.elnodo;
 };
-
