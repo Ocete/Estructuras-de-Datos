@@ -20,6 +20,9 @@ jugar: $(BIN)/quienesquien
 jugarRedundante: $(BIN)/quienesquien
 	$(BIN)/quienesquien datos/personajes-redundantes.csv
 
+valgrind: $(BIN)/quienesquien
+	valgrind --leak-check=full $(BIN)/quienesquien datos/personajes-redundantes.csv
+
 jugarTableroGigante: $(BIN)/quienesquienGrande
 	$(BIN)/quienesquienGrande datos/tablero-num-per=10000 #-num-atr=15-seed=0
 

@@ -10,7 +10,6 @@ using namespace std;
 int main(int argc, char * argv[]){
 
 	bool jugar = false;
-	bool limpiar = false;
 	QuienEsQuien quienEsQuien;
 
 	if(argc == 2){
@@ -18,7 +17,6 @@ int main(int argc, char * argv[]){
 	if(argv[1]== parametroAleatorio){
 		cout << "Creando un QuienEsQuien aleatorio"<< endl;
 		int numero_de_personajes;
-   	int numero_de_atributos;
 
    	do{
    		cout << "¿Número de personajes? ";
@@ -144,12 +142,7 @@ int main(int argc, char * argv[]){
 
 	quienEsQuien.mostrar_estructuras_leidas();
 
-	cout << "\n\nCreemos el árbol de nuevo utilizando entropía.\n\n" << endl;/*
-	quienEsQuien.elimina_personaje("Pablo");
-	quienEsQuien.elimina_personaje("Pilar");
-	quienEsQuien.elimina_personaje("Ernesto");
-	quienEsQuien.escribir_arbol_completo();*/
-
+	cout << "\n\nCreemos el árbol de nuevo utilizando entropía." << endl;
 	quienEsQuien.usar_arbol(quienEsQuien.crear_arbol_con_entropia());
 
 	cout << "\n============== Arbol creado con entropía ==============="<<endl;

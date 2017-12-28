@@ -472,8 +472,6 @@ void QuienEsQuien::tablero_aleatorio(int numero_de_personajes){
 //				METODOS EXTRA         //
 //////////////////////////////////
 
-// Prec jugada != null
-
 void QuienEsQuien::preguntas_formuladas (bintree<Pregunta>::node jugada) {
 	bintree<Pregunta>::node aux = jugada;
 	string str;
@@ -498,7 +496,6 @@ void QuienEsQuien::preguntas_formuladas (bintree<Pregunta>::node jugada) {
 	}
 }
 
-//Prec.: Al menos dos personajes en el arbol
 void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas) {
 	if (caracteristicas.size() == tablero[0].size() &&
 				log(1.0*personajes.size()+1) <= caracteristicas.size()) {
@@ -615,7 +612,6 @@ void QuienEsQuien::aniade_personaje (string nombre, vector<bool> caracteristicas
 
 }
 
-//Prec.: Al menos dos personajes en el arbol
 void QuienEsQuien::elimina_personaje (string nombre) {
 	int i_pj = 0, i_pregunta = 0;
 	bintree<Pregunta>::node jugada = arbol.root(), jugada_padre;
